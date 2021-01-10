@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.makeKeyAndVisible()
         window?.rootViewController = GridKeyboardViewController()
+        initAudio()
         return true
     }
 }

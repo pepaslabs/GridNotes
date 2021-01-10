@@ -8,12 +8,18 @@
 import UIKit
 
 
-class GridKeyboardViewController: UIViewController, KeyRowDelegate {
+class GridKeyboardViewController: UIViewController {
 
     var rows: [KeyRow] = [KeyRow(), KeyRow(), KeyRow(), KeyRow(), KeyRow(), KeyRow(), KeyRow()]
     
+    // MARK: - Internals
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        _assembleViewHierarchy()
+    }
+    
+    private func _assembleViewHierarchy() {
         view.backgroundColor = UIColor.white
 
         let guide = view.layoutMarginsGuide
@@ -36,9 +42,10 @@ class GridKeyboardViewController: UIViewController, KeyRowDelegate {
         for i in [0,1,2,3,4,5,6] {
             rows[i].delegate = self
         }
-
-        initAudio()
     }
+}
+
+extension GridKeyboardViewController: KeyRowDelegate {
     
     func keyDidGetPressed(note: Int) {
         startNote(note: UInt8(note))
@@ -95,10 +102,17 @@ class KeyRow: UIView {
         for i in [0,1,2,3,4,5,6,7,8,9,10,11] {
             keys[i].tag = i
         }
-        
+
+        for (i, ch) in ["C", "", "D", "", "E", "F", "", "G", "", "A", "", "B"].enumerated() {
+            keys[i].setTitle(ch, for: .normal)
+            keys[i].setTitleColor(UIColor.systemBlue, for: .normal)
+        }
+
         setNeedsUpdateConstraints()
     }
 
+    // MARK: - Internals
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

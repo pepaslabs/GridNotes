@@ -7,6 +7,7 @@
 
 
 import AudioToolbox
+import AVKit
 
 
 enum MIDICommand {
@@ -24,6 +25,9 @@ var outputNode: AUNode = AUNode()
 var synthUnit: AudioUnit?
 
 func initAudio() {
+    // Allow audio output even when silent switch engaged.
+    try? AVAudioSession.sharedInstance().setCategory(.playback)
+    
     var ret: OSStatus
     
     ret = NewAUGraph(&graph)
