@@ -1,0 +1,660 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2B4553D225AB706500A95718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4553D125AB706500A95718 /* AppDelegate.swift */; };
+		2B4553DB25AB706700A95718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B4553DA25AB706700A95718 /* Assets.xcassets */; };
+		2B4553DE25AB706700A95718 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B4553DC25AB706700A95718 /* LaunchScreen.storyboard */; };
+		2B4553E925AB706700A95718 /* GridNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4553E825AB706700A95718 /* GridNotesTests.swift */; };
+		2B4553F425AB706700A95718 /* GridNotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4553F325AB706700A95718 /* GridNotesUITests.swift */; };
+		2B45540E25AB71CD00A95718 /* GridKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */; };
+		2B45541325AB722300A95718 /* Midi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45541225AB722300A95718 /* Midi.swift */; };
+		2B45542825AB735000A95718 /* Rock Organ.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541825AB735000A95718 /* Rock Organ.sf2 */; };
+		2B45542925AB735000A95718 /* Sine Wave.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541925AB735000A95718 /* Sine Wave.sf2 */; };
+		2B45542A25AB735000A95718 /* Ohh Voices.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541A25AB735000A95718 /* Ohh Voices.sf2 */; };
+		2B45542B25AB735000A95718 /* Rhodes EP.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541B25AB735000A95718 /* Rhodes EP.sf2 */; };
+		2B45542C25AB735000A95718 /* Violin.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541C25AB735000A95718 /* Violin.sf2 */; };
+		2B45542D25AB735000A95718 /* Synth Strings 2.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541D25AB735000A95718 /* Synth Strings 2.sf2 */; };
+		2B45542E25AB735000A95718 /* Church Organ 2.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541E25AB735000A95718 /* Church Organ 2.sf2 */; };
+		2B45542F25AB735000A95718 /* Distortion Guitar.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541F25AB735000A95718 /* Distortion Guitar.sf2 */; };
+		2B45543025AB735000A95718 /* French Horns.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45542025AB735000A95718 /* French Horns.sf2 */; };
+		2B45543125AB735000A95718 /* Clean Guitar.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45542125AB735000A95718 /* Clean Guitar.sf2 */; };
+		2B45543225AB735000A95718 /* Harpsichord.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45542225AB735000A95718 /* Harpsichord.sf2 */; };
+		2B45543325AB735000A95718 /* Saw Wave.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45542325AB735000A95718 /* Saw Wave.sf2 */; };
+		2B45543425AB735000A95718 /* Overdrive Guitar.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45542425AB735000A95718 /* Overdrive Guitar.sf2 */; };
+		2B45543525AB735000A95718 /* Trumpet.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45542525AB735000A95718 /* Trumpet.sf2 */; };
+		2B45543625AB735000A95718 /* Cello.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45542625AB735000A95718 /* Cello.sf2 */; };
+		2B45543725AB735000A95718 /* Yamaha Grand Piano.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45542725AB735000A95718 /* Yamaha Grand Piano.sf2 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2B4553E525AB706700A95718 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B4553C625AB706500A95718 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2B4553CD25AB706500A95718;
+			remoteInfo = GridNotes;
+		};
+		2B4553F025AB706700A95718 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B4553C625AB706500A95718 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2B4553CD25AB706500A95718;
+			remoteInfo = GridNotes;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2B4553CE25AB706500A95718 /* GridNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B4553D125AB706500A95718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2B4553DA25AB706700A95718 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2B4553DD25AB706700A95718 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2B4553DF25AB706700A95718 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B4553E425AB706700A95718 /* GridNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GridNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B4553E825AB706700A95718 /* GridNotesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridNotesTests.swift; sourceTree = "<group>"; };
+		2B4553EA25AB706700A95718 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B4553EF25AB706700A95718 /* GridNotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GridNotesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B4553F325AB706700A95718 /* GridNotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridNotesUITests.swift; sourceTree = "<group>"; };
+		2B4553F525AB706700A95718 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridKeyboardViewController.swift; sourceTree = "<group>"; };
+		2B45541225AB722300A95718 /* Midi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Midi.swift; sourceTree = "<group>"; };
+		2B45541825AB735000A95718 /* Rock Organ.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rock Organ.sf2"; sourceTree = "<group>"; };
+		2B45541925AB735000A95718 /* Sine Wave.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sine Wave.sf2"; sourceTree = "<group>"; };
+		2B45541A25AB735000A95718 /* Ohh Voices.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ohh Voices.sf2"; sourceTree = "<group>"; };
+		2B45541B25AB735000A95718 /* Rhodes EP.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rhodes EP.sf2"; sourceTree = "<group>"; };
+		2B45541C25AB735000A95718 /* Violin.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Violin.sf2; sourceTree = "<group>"; };
+		2B45541D25AB735000A95718 /* Synth Strings 2.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Synth Strings 2.sf2"; sourceTree = "<group>"; };
+		2B45541E25AB735000A95718 /* Church Organ 2.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Church Organ 2.sf2"; sourceTree = "<group>"; };
+		2B45541F25AB735000A95718 /* Distortion Guitar.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Distortion Guitar.sf2"; sourceTree = "<group>"; };
+		2B45542025AB735000A95718 /* French Horns.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "French Horns.sf2"; sourceTree = "<group>"; };
+		2B45542125AB735000A95718 /* Clean Guitar.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clean Guitar.sf2"; sourceTree = "<group>"; };
+		2B45542225AB735000A95718 /* Harpsichord.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Harpsichord.sf2; sourceTree = "<group>"; };
+		2B45542325AB735000A95718 /* Saw Wave.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Saw Wave.sf2"; sourceTree = "<group>"; };
+		2B45542425AB735000A95718 /* Overdrive Guitar.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Overdrive Guitar.sf2"; sourceTree = "<group>"; };
+		2B45542525AB735000A95718 /* Trumpet.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Trumpet.sf2; sourceTree = "<group>"; };
+		2B45542625AB735000A95718 /* Cello.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cello.sf2; sourceTree = "<group>"; };
+		2B45542725AB735000A95718 /* Yamaha Grand Piano.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Yamaha Grand Piano.sf2"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2B4553CB25AB706500A95718 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2B4553E125AB706700A95718 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2B4553EC25AB706700A95718 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2B4553C525AB706500A95718 = {
+			isa = PBXGroup;
+			children = (
+				2B4553D025AB706500A95718 /* GridNotes */,
+				2B4553E725AB706700A95718 /* GridNotesTests */,
+				2B4553F225AB706700A95718 /* GridNotesUITests */,
+				2B4553CF25AB706500A95718 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2B4553CF25AB706500A95718 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2B4553CE25AB706500A95718 /* GridNotes.app */,
+				2B4553E425AB706700A95718 /* GridNotesTests.xctest */,
+				2B4553EF25AB706700A95718 /* GridNotesUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2B4553D025AB706500A95718 /* GridNotes */ = {
+			isa = PBXGroup;
+			children = (
+				2B4553D125AB706500A95718 /* AppDelegate.swift */,
+				2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */,
+				2B45541225AB722300A95718 /* Midi.swift */,
+				2B4553DA25AB706700A95718 /* Assets.xcassets */,
+				2B4553DC25AB706700A95718 /* LaunchScreen.storyboard */,
+				2B4553DF25AB706700A95718 /* Info.plist */,
+				2B45541725AB735000A95718 /* Instruments */,
+			);
+			path = GridNotes;
+			sourceTree = "<group>";
+		};
+		2B4553E725AB706700A95718 /* GridNotesTests */ = {
+			isa = PBXGroup;
+			children = (
+				2B4553E825AB706700A95718 /* GridNotesTests.swift */,
+				2B4553EA25AB706700A95718 /* Info.plist */,
+			);
+			path = GridNotesTests;
+			sourceTree = "<group>";
+		};
+		2B4553F225AB706700A95718 /* GridNotesUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2B4553F325AB706700A95718 /* GridNotesUITests.swift */,
+				2B4553F525AB706700A95718 /* Info.plist */,
+			);
+			path = GridNotesUITests;
+			sourceTree = "<group>";
+		};
+		2B45541725AB735000A95718 /* Instruments */ = {
+			isa = PBXGroup;
+			children = (
+				2B45541825AB735000A95718 /* Rock Organ.sf2 */,
+				2B45541925AB735000A95718 /* Sine Wave.sf2 */,
+				2B45541A25AB735000A95718 /* Ohh Voices.sf2 */,
+				2B45541B25AB735000A95718 /* Rhodes EP.sf2 */,
+				2B45541C25AB735000A95718 /* Violin.sf2 */,
+				2B45541D25AB735000A95718 /* Synth Strings 2.sf2 */,
+				2B45541E25AB735000A95718 /* Church Organ 2.sf2 */,
+				2B45541F25AB735000A95718 /* Distortion Guitar.sf2 */,
+				2B45542025AB735000A95718 /* French Horns.sf2 */,
+				2B45542125AB735000A95718 /* Clean Guitar.sf2 */,
+				2B45542225AB735000A95718 /* Harpsichord.sf2 */,
+				2B45542325AB735000A95718 /* Saw Wave.sf2 */,
+				2B45542425AB735000A95718 /* Overdrive Guitar.sf2 */,
+				2B45542525AB735000A95718 /* Trumpet.sf2 */,
+				2B45542625AB735000A95718 /* Cello.sf2 */,
+				2B45542725AB735000A95718 /* Yamaha Grand Piano.sf2 */,
+			);
+			path = Instruments;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2B4553CD25AB706500A95718 /* GridNotes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2B4553F825AB706700A95718 /* Build configuration list for PBXNativeTarget "GridNotes" */;
+			buildPhases = (
+				2B4553CA25AB706500A95718 /* Sources */,
+				2B4553CB25AB706500A95718 /* Frameworks */,
+				2B4553CC25AB706500A95718 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GridNotes;
+			productName = GridNotes;
+			productReference = 2B4553CE25AB706500A95718 /* GridNotes.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2B4553E325AB706700A95718 /* GridNotesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2B4553FB25AB706700A95718 /* Build configuration list for PBXNativeTarget "GridNotesTests" */;
+			buildPhases = (
+				2B4553E025AB706700A95718 /* Sources */,
+				2B4553E125AB706700A95718 /* Frameworks */,
+				2B4553E225AB706700A95718 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2B4553E625AB706700A95718 /* PBXTargetDependency */,
+			);
+			name = GridNotesTests;
+			productName = GridNotesTests;
+			productReference = 2B4553E425AB706700A95718 /* GridNotesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2B4553EE25AB706700A95718 /* GridNotesUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2B4553FE25AB706700A95718 /* Build configuration list for PBXNativeTarget "GridNotesUITests" */;
+			buildPhases = (
+				2B4553EB25AB706700A95718 /* Sources */,
+				2B4553EC25AB706700A95718 /* Frameworks */,
+				2B4553ED25AB706700A95718 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2B4553F125AB706700A95718 /* PBXTargetDependency */,
+			);
+			name = GridNotesUITests;
+			productName = GridNotesUITests;
+			productReference = 2B4553EF25AB706700A95718 /* GridNotesUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2B4553C625AB706500A95718 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1220;
+				LastUpgradeCheck = 1220;
+				TargetAttributes = {
+					2B4553CD25AB706500A95718 = {
+						CreatedOnToolsVersion = 12.2;
+					};
+					2B4553E325AB706700A95718 = {
+						CreatedOnToolsVersion = 12.2;
+						TestTargetID = 2B4553CD25AB706500A95718;
+					};
+					2B4553EE25AB706700A95718 = {
+						CreatedOnToolsVersion = 12.2;
+						TestTargetID = 2B4553CD25AB706500A95718;
+					};
+				};
+			};
+			buildConfigurationList = 2B4553C925AB706500A95718 /* Build configuration list for PBXProject "GridNotes" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2B4553C525AB706500A95718;
+			productRefGroup = 2B4553CF25AB706500A95718 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2B4553CD25AB706500A95718 /* GridNotes */,
+				2B4553E325AB706700A95718 /* GridNotesTests */,
+				2B4553EE25AB706700A95718 /* GridNotesUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2B4553CC25AB706500A95718 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B45543125AB735000A95718 /* Clean Guitar.sf2 in Resources */,
+				2B45542B25AB735000A95718 /* Rhodes EP.sf2 in Resources */,
+				2B45543625AB735000A95718 /* Cello.sf2 in Resources */,
+				2B45543025AB735000A95718 /* French Horns.sf2 in Resources */,
+				2B45542E25AB735000A95718 /* Church Organ 2.sf2 in Resources */,
+				2B45542925AB735000A95718 /* Sine Wave.sf2 in Resources */,
+				2B45543525AB735000A95718 /* Trumpet.sf2 in Resources */,
+				2B45543325AB735000A95718 /* Saw Wave.sf2 in Resources */,
+				2B45543425AB735000A95718 /* Overdrive Guitar.sf2 in Resources */,
+				2B45542F25AB735000A95718 /* Distortion Guitar.sf2 in Resources */,
+				2B45543225AB735000A95718 /* Harpsichord.sf2 in Resources */,
+				2B45542A25AB735000A95718 /* Ohh Voices.sf2 in Resources */,
+				2B45542C25AB735000A95718 /* Violin.sf2 in Resources */,
+				2B4553DE25AB706700A95718 /* LaunchScreen.storyboard in Resources */,
+				2B4553DB25AB706700A95718 /* Assets.xcassets in Resources */,
+				2B45542D25AB735000A95718 /* Synth Strings 2.sf2 in Resources */,
+				2B45542825AB735000A95718 /* Rock Organ.sf2 in Resources */,
+				2B45543725AB735000A95718 /* Yamaha Grand Piano.sf2 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2B4553E225AB706700A95718 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2B4553ED25AB706700A95718 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2B4553CA25AB706500A95718 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B45540E25AB71CD00A95718 /* GridKeyboardViewController.swift in Sources */,
+				2B45541325AB722300A95718 /* Midi.swift in Sources */,
+				2B4553D225AB706500A95718 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2B4553E025AB706700A95718 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B4553E925AB706700A95718 /* GridNotesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2B4553EB25AB706700A95718 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B4553F425AB706700A95718 /* GridNotesUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2B4553E625AB706700A95718 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2B4553CD25AB706500A95718 /* GridNotes */;
+			targetProxy = 2B4553E525AB706700A95718 /* PBXContainerItemProxy */;
+		};
+		2B4553F125AB706700A95718 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2B4553CD25AB706500A95718 /* GridNotes */;
+			targetProxy = 2B4553F025AB706700A95718 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2B4553DC25AB706700A95718 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2B4553DD25AB706700A95718 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2B4553F625AB706700A95718 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2B4553F725AB706700A95718 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2B4553F925AB706700A95718 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CPE62329FB;
+				INFOPLIST_FILE = GridNotes/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepaslabs.gridnotes;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2B4553FA25AB706700A95718 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CPE62329FB;
+				INFOPLIST_FILE = GridNotes/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepaslabs.gridnotes;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2B4553FC25AB706700A95718 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CPE62329FB;
+				INFOPLIST_FILE = GridNotesTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepaslabs.GridNotesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GridNotes.app/GridNotes";
+			};
+			name = Debug;
+		};
+		2B4553FD25AB706700A95718 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CPE62329FB;
+				INFOPLIST_FILE = GridNotesTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepaslabs.GridNotesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GridNotes.app/GridNotes";
+			};
+			name = Release;
+		};
+		2B4553FF25AB706700A95718 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CPE62329FB;
+				INFOPLIST_FILE = GridNotesUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepaslabs.GridNotesUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GridNotes;
+			};
+			name = Debug;
+		};
+		2B45540025AB706700A95718 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CPE62329FB;
+				INFOPLIST_FILE = GridNotesUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepaslabs.GridNotesUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GridNotes;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2B4553C925AB706500A95718 /* Build configuration list for PBXProject "GridNotes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B4553F625AB706700A95718 /* Debug */,
+				2B4553F725AB706700A95718 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2B4553F825AB706700A95718 /* Build configuration list for PBXNativeTarget "GridNotes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B4553F925AB706700A95718 /* Debug */,
+				2B4553FA25AB706700A95718 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2B4553FB25AB706700A95718 /* Build configuration list for PBXNativeTarget "GridNotesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B4553FC25AB706700A95718 /* Debug */,
+				2B4553FD25AB706700A95718 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2B4553FE25AB706700A95718 /* Build configuration list for PBXNativeTarget "GridNotesUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B4553FF25AB706700A95718 /* Debug */,
+				2B45540025AB706700A95718 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2B4553C625AB706500A95718 /* Project object */;
+}
