@@ -13,16 +13,50 @@ class GridKeyboardViewController: UIViewController {
     var rows: [KeyRowView] = []
     var toolbar: UIToolbar!
 
+    enum RowStyle {
+        case twelveKeys
+        case sevenKeys
+    }
+    
+    enum NonDiatonicKeyStyle: String, CaseIterable {
+        case shaded
+        case disabled
+        
+        var name: String {
+            switch self {
+            case .shaded:
+                return "Shaded, but Enabled"
+            case .disabled:
+                return "Shaded and Disabled"
+            }
+        }
+    }
+    
     struct Model {
         var tonicNote: Note
+        var scale: Scale
         var octaves: [Octave]
+        var rowStyle: RowStyle
+        var nonScaleStyle: NonDiatonicKeyStyle
         
         static var defaultModel: Model {
             switch UIDevice.current.userInterfaceIdiom {
             case .phone:
-                return Model(tonicNote: .C, octaves: Octave.octavesForPhone)
+                return Model(
+                    tonicNote: .C,
+                    scale: .major,
+                    octaves: Octave.octavesForPhone,
+                    rowStyle: .twelveKeys,
+                    nonScaleStyle: .disabled
+                )
             case .pad:
-                return Model(tonicNote: .C, octaves: Octave.octavesForPad)
+                return Model(
+                    tonicNote: .C,
+                    scale: .major,
+                    octaves: Octave.octavesForPad,
+                    rowStyle: .twelveKeys,
+                    nonScaleStyle: .disabled
+                )
             default:
                 fatalError()
             }
@@ -31,6 +65,7 @@ class GridKeyboardViewController: UIViewController {
     
     var model: Model = Model.defaultModel {
         didSet {
+            _configureToolbar()
             _configureKeyRows()
         }
     }
@@ -90,38 +125,74 @@ class GridKeyboardViewController: UIViewController {
             }
         }
         
-        func configureToolbar() {
-            toolbar.barTintColor = UIColor.white
-
-            let item1 = UIBarButtonItem.init(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-            let item2 = UIBarButtonItem.init(
-                title: "Settings",
-                style: .done,
-                target: self,
-                action: #selector(didPressSettings)
-            )
-            toolbar.setItems([item1, item2], animated: false)
-        }
-
         view.backgroundColor = UIColor.white
 
         // Using UIToolbar.init() results in constraint conflicts, so instead we init with a frame.
         toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 44))
 
         assembleViewHierarchy()
-        configureToolbar()
+        _configureToolbar()
         _configureKeyRows()
+    }
+
+    private func _configureToolbar() {
+        toolbar.barTintColor = UIColor.white
+        var items = [UIBarButtonItem]()
+
+        let titleItem = UIBarButtonItem.init(
+            title: "GridNotes",
+            style: .done,
+            target: nil,
+            action: nil
+        )
+        titleItem.isEnabled = false
+        titleItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .disabled)
+        items.append(titleItem)
+
+        items.append(
+            UIBarButtonItem.init(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        )
+
+        items.append(
+            UIBarButtonItem.init(
+                title: "\(model.tonicNote.name) \(model.scale.name)",
+                style: .done,
+                target: self,
+                action: #selector(didPressSettings)
+            )
+        )
+
+        toolbar.setItems(items, animated: false)
     }
 
     private func _configureKeyRows() {
         for (i, octave) in model.octaves.reversed().enumerated() {
-            let firstNote = AbsoluteNote(note: model.tonicNote, octave: octave)
-            let scale = AbsoluteNote.chromaticScale(from: firstNote)
-            rows[i].model = KeyRowView.Model(notes: scale)
+            _configureKeyRow(index: i, octave: octave)
         }
         for row in rows {
             row.delegate = self
         }
+    }
+
+    private func _configureKeyRow(index: Int, octave: Octave) {
+        let firstNote = AbsoluteNote(note: model.tonicNote, octave: octave)
+        let allNotes = AbsoluteNote.chromaticScale(from: firstNote)
+        let scaleIndices = model.scale.semitoneIndices
+        let styledNotes: [(AbsoluteNote, KeyRowView.KeyStyle)?] = allNotes.enumerated().map { (index, note) in
+            if let note = note {
+                if scaleIndices.contains(index) {
+                    return (note, .normal)
+                } else {
+                    let keyStyle = KeyRowView.KeyStyle(rawValue: model.nonScaleStyle.rawValue)!
+                    return (note, keyStyle)
+                }
+            } else {
+                return nil
+            }
+
+        }
+
+        rows[index].model = KeyRowView.Model(styledNotes: styledNotes)
     }
     
     // Allow button presses to register near the edges of the screen.

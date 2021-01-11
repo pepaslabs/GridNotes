@@ -15,9 +15,15 @@ protocol KeyRowDelegate {
 
 
 class KeyRowView: UIView {
+
+    enum KeyStyle: String {
+        case normal
+        case shaded
+        case disabled
+    }
     
     struct Model {
-        var notes: [AbsoluteNote?] = []
+        var styledNotes: [(AbsoluteNote, KeyStyle)?] = []
     }
 
     var model: Model = Model() {
@@ -37,6 +43,8 @@ class KeyRowView: UIView {
     }
     
     // MARK: - Internals
+
+    private static let _shadedGray: UIColor = UIColor(white: 0.85, alpha: 1)
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -91,28 +99,45 @@ class KeyRowView: UIView {
         }
         keys.removeAll()
         
-        for (i, note) in model.notes.enumerated() {
-            let key = UIButton()
+        for (i, styledNote) in model.styledNotes.enumerated() {
+            let key = UIButton(type: .system)
             key.translatesAutoresizingMaskIntoConstraints = false
             addSubview(key)
             key.layer.borderWidth = 1
-            key.layer.borderColor = UIColor.blue.cgColor
+            key.layer.borderColor = UIColor(white: 0.15, alpha: 1).cgColor
             key.titleLabel?.adjustsFontSizeToFitWidth = true
             key.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
             key.titleLabel?.lineBreakMode = .byWordWrapping
             key.titleLabel?.textAlignment = .center
             key.tag = i
-            key.addTarget(self, action: #selector(keyDidGetPressed(key:)), for: .touchDown)
-            key.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchUpInside)
-            key.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchDragExit)
-            key.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchCancel)
-            keys.append(key)
 
-            if let note = note {
-                let title = buttonText(absoluteNote: note)
+            if let (absoluteNote, keyStyle) = styledNote {
+                let title = buttonText(absoluteNote: absoluteNote)
                 key.setTitle(title, for: .normal)
-                key.setTitleColor(UIColor.systemBlue, for: .normal)
+
+                switch keyStyle {
+                case .normal:
+                    key.isEnabled = true
+                    key.backgroundColor = UIColor.white
+                case .shaded:
+                    key.isEnabled = true
+                    key.backgroundColor = KeyRowView._shadedGray
+                case .disabled:
+                    key.isEnabled = false
+                    key.backgroundColor = KeyRowView._shadedGray
+                }
+                
+                key.addTarget(self, action: #selector(keyDidGetPressed(key:)), for: .touchDown)
+                key.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchUpInside)
+                key.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchDragExit)
+                key.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchCancel)
+
+            } else {
+                key.isEnabled = false
+                key.backgroundColor = KeyRowView._shadedGray
             }
+
+            keys.append(key)
         }
 
         _hasSetUpConstraints = false
@@ -122,15 +147,20 @@ class KeyRowView: UIView {
     // MARK: - Target/Action
     
     @objc func keyDidGetPressed(key: UIButton) {
-        if let absoluteNote = model.notes[key.tag] {
+        if let (absoluteNote, _) = model.styledNotes[key.tag] {
             key.backgroundColor = UIColor.yellow
             delegate?.keyDidGetPressed(absoluteNote: absoluteNote)
         }
     }
     
     @objc func keyDidGetReleased(key: UIButton) {
-        if let absoluteNote = model.notes[key.tag] {
-            key.backgroundColor = UIColor.clear
+        if let (absoluteNote, keyStyle) = model.styledNotes[key.tag] {
+            switch keyStyle {
+            case .normal:
+                key.backgroundColor = UIColor.white
+            case .shaded, .disabled:
+                key.backgroundColor = KeyRowView._shadedGray
+            }
             delegate?.keyDidGetReleased(absoluteNote: absoluteNote)
         }
     }

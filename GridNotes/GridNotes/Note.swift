@@ -46,6 +46,16 @@ enum Note: String, CaseIterable {
     static var noteNames: [String] {
         return Note.allCases.map { $0.rawValue }
     }
+    
+    static func chromaticScale(from startingNote: Note) -> [Note] {
+        var note: Note = startingNote
+        var notes: [Note] = []
+        for _ in 0..<12 {
+            notes.append(note)
+            note = note.next
+        }
+        return notes
+    }
 }
 
 
@@ -126,5 +136,63 @@ struct AbsoluteNote {
     
     var midiPitch: UInt32 {
         return UInt32((note.index-3) + (octave.rawValue+1) * 12)
+    }
+}
+
+
+enum Scale: String, CaseIterable {
+    case chromatic = "Chromatic"
+    case major = "Major / Ionian"
+    case naturalMinor = "Natural Minor / Aeolian"
+    case harmonicMinor = "Harmonic Minor"
+    case melodicMinorBi = "Melodic Minor (bidirectional)"
+    case melodicMinorAsc = "Melodic Minor (ascending)"
+    case melodicMinorDesc = "Melodic Minor (descending)"
+    case dorian = "Dorian"
+    case phyrgian = "Phyrgian"
+    case lydian = "Lydian"
+    case mixolydian = "Mixolydian"
+    case locrian = "Locrian"
+    case wholeTone = "Whole Tone"
+    case majorPent = "Major Pentatonic"
+    case minorPent = "Minor Pentatonic"
+
+    var name: String {
+        return rawValue
+    }
+    
+    var semitoneIndices: [Int] {
+        switch self {
+        case .chromatic:
+            return [1,2,3,4,5,6,7,8,9,10,11,12].map { $0 - 1 }
+        case .major:
+            return [1,  3,  5,6,  8,  10,   12].map { $0 - 1 }
+        case .naturalMinor:
+            return [1,  3,4,  6,  8,9,   11,  ].map { $0 - 1 }
+        case .harmonicMinor:
+            return [1,  3,4,  6,  8,9,      12].map { $0 - 1 }
+        case .melodicMinorBi:
+            return [1,  3,4,  6,  8,9,10,11,12].map { $0 - 1 }
+        case .melodicMinorAsc:
+            return [1,  3,4,  6,  8,  10,   12].map { $0 - 1 }
+        case .melodicMinorDesc:
+            return [1,  3,4,  6,  8,9,   11,  ].map { $0 - 1 }
+        case .dorian:
+            return [1,  3,4,  6,  8,  10,11   ].map { $0 - 1 }
+        case .phyrgian:
+            return [1,2,  4,  6,  8,9,   11   ].map { $0 - 1 }
+        case .lydian:
+            return [1,  3,  5,  7,8,  10,   12].map { $0 - 1 }
+        case .mixolydian:
+            return [1,  3,  5,6,  8,  10,11   ].map { $0 - 1 }
+        case .locrian:
+            return [1,2,  4,  6,7,  9,   11   ].map { $0 - 1 }
+        case .wholeTone:
+            return [1,  3,  5,  7,  9,   11   ].map { $0 - 1 }
+        case .majorPent:
+            return [1,  3,  5,    8,  10      ].map { $0 - 1 }
+        case .minorPent:
+            return [1,    4,  6,  8,     11,  ].map { $0 - 1 }
+        }
     }
 }
