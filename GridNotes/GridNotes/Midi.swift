@@ -122,27 +122,19 @@ func initAudio() {
     precondition(ret == kAudioServicesNoError)
 }
 
-func startNote(note: UInt8) {
-    print("startNote \(note)")
+func startPlaying(absoluteNote: AbsoluteNote) {
     var ret: OSStatus
     let channel: UInt32 = 0
     let command: UInt32 = (MIDICommand.noteOn | channel)
-    let base: UInt8 = note
-    let octave: UInt32 = 0
-    let pitch: UInt32 = UInt32(base) + (octave * 12)
     let velocity: UInt32 = 128
-    ret = MusicDeviceMIDIEvent(synthUnit!, command, pitch, velocity, 0)
+    ret = MusicDeviceMIDIEvent(synthUnit!, command, absoluteNote.midiPitch, velocity, 0)
     precondition(ret == kAudioServicesNoError)
 }
 
-func endNote(note: UInt8) {
-    print("endNote \(note)")
+func stopPlaying(absoluteNote: AbsoluteNote) {
     var ret: OSStatus
     let channel: UInt32 = 0
     let command: UInt32 = (MIDICommand.noteOff | channel)
-    let base: UInt8 = note
-    let octave: UInt32 = 0
-    let pitch: UInt32 = UInt32(base) + (octave * 12)
-    ret = MusicDeviceMIDIEvent(synthUnit!, command, pitch, 0, 0)
+    ret = MusicDeviceMIDIEvent(synthUnit!, command, absoluteNote.midiPitch, 0, 0)
     precondition(ret == kAudioServicesNoError)
 }

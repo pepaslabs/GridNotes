@@ -30,6 +30,9 @@
 		2B45543525AB735000A95718 /* Trumpet.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45542525AB735000A95718 /* Trumpet.sf2 */; };
 		2B45543625AB735000A95718 /* Cello.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45542625AB735000A95718 /* Cello.sf2 */; };
 		2B45543725AB735000A95718 /* Yamaha Grand Piano.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45542725AB735000A95718 /* Yamaha Grand Piano.sf2 */; };
+		2B45543F25AB8D6C00A95718 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45543E25AB8D6C00A95718 /* SettingsViewController.swift */; };
+		2B45544425ABDEA800A95718 /* KeyRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45544325ABDEA800A95718 /* KeyRowView.swift */; };
+		2B45544925ACC62E00A95718 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45544825ACC62E00A95718 /* Note.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +82,9 @@
 		2B45542525AB735000A95718 /* Trumpet.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Trumpet.sf2; sourceTree = "<group>"; };
 		2B45542625AB735000A95718 /* Cello.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cello.sf2; sourceTree = "<group>"; };
 		2B45542725AB735000A95718 /* Yamaha Grand Piano.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Yamaha Grand Piano.sf2"; sourceTree = "<group>"; };
+		2B45543E25AB8D6C00A95718 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		2B45544325ABDEA800A95718 /* KeyRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyRowView.swift; sourceTree = "<group>"; };
+		2B45544825ACC62E00A95718 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,9 +135,12 @@
 		2B4553D025AB706500A95718 /* GridNotes */ = {
 			isa = PBXGroup;
 			children = (
-				2B4553D125AB706500A95718 /* AppDelegate.swift */,
-				2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */,
 				2B45541225AB722300A95718 /* Midi.swift */,
+				2B45544825ACC62E00A95718 /* Note.swift */,
+				2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */,
+				2B45544325ABDEA800A95718 /* KeyRowView.swift */,
+				2B45543E25AB8D6C00A95718 /* SettingsViewController.swift */,
+				2B4553D125AB706500A95718 /* AppDelegate.swift */,
 				2B4553DA25AB706700A95718 /* Assets.xcassets */,
 				2B4553DC25AB706700A95718 /* LaunchScreen.storyboard */,
 				2B4553DF25AB706700A95718 /* Info.plist */,
@@ -329,6 +338,9 @@
 				2B45540E25AB71CD00A95718 /* GridKeyboardViewController.swift in Sources */,
 				2B45541325AB722300A95718 /* Midi.swift in Sources */,
 				2B4553D225AB706500A95718 /* AppDelegate.swift in Sources */,
+				2B45544425ABDEA800A95718 /* KeyRowView.swift in Sources */,
+				2B45543F25AB8D6C00A95718 /* SettingsViewController.swift in Sources */,
+				2B45544925ACC62E00A95718 /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

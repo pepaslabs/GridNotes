@@ -10,143 +10,171 @@ import UIKit
 
 class GridKeyboardViewController: UIViewController {
 
-    var rows: [KeyRow] = [KeyRow(), KeyRow(), KeyRow(), KeyRow(), KeyRow(), KeyRow(), KeyRow()]
+    var rows: [KeyRowView] = []
+    var toolbar: UIToolbar!
+
+    struct Model {
+        var tonicNote: Note
+        var octaves: [Octave]
+        
+        static var defaultModel: Model {
+            switch UIDevice.current.userInterfaceIdiom {
+            case .phone:
+                return Model(tonicNote: .C, octaves: Octave.octavesForPhone)
+            case .pad:
+                return Model(tonicNote: .C, octaves: Octave.octavesForPad)
+            default:
+                fatalError()
+            }
+        }
+    }
+    
+    var model: Model = Model.defaultModel {
+        didSet {
+            _configureKeyRows()
+        }
+    }
     
     // MARK: - Internals
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        _assembleViewHierarchy()
-    }
-    
-    private func _assembleViewHierarchy() {
+
+        for _ in model.octaves {
+            rows.append(KeyRowView())
+        }
+
+        func assembleViewHierarchy() {
+            toolbar.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(toolbar)
+
+            for row in rows {
+                row.translatesAutoresizingMaskIntoConstraints = false
+                view.addSubview(row)
+            }
+
+            view.topAnchor.constraint(equalTo: toolbar.topAnchor).isActive = true
+            view.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor).isActive = true
+            view.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor).isActive = true
+            toolbar.bottomAnchor.constraint(equalTo: rows.first!.topAnchor).isActive = true
+            toolbar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+
+            for i in 0..<(model.octaves.count-1) {
+                rows[i].bottomAnchor.constraint(equalTo: rows[i+1].topAnchor).isActive = true
+            }
+
+            for i in 1..<model.octaves.count {
+                rows[i].heightAnchor.constraint(equalTo: rows[0].heightAnchor).isActive = true
+            }
+
+            let guide = view.layoutMarginsGuide
+
+            switch UIDevice.current.userInterfaceIdiom {
+            case .phone:
+                for row in rows {
+                    view.leadingAnchor.constraint(equalTo: row.leadingAnchor).isActive = true
+                    view.trailingAnchor.constraint(equalTo: row.trailingAnchor).isActive = true
+                }
+                view.bottomAnchor.constraint(equalTo: rows.last!.bottomAnchor).isActive = true
+            case .pad:
+                for row in rows {
+                    guide.leadingAnchor.constraint(equalTo: row.leadingAnchor).isActive = true
+                    guide.trailingAnchor.constraint(equalTo: row.trailingAnchor).isActive = true
+                }
+                guide.bottomAnchor.constraint(
+                    equalToSystemSpacingBelow: rows.last!.bottomAnchor,
+                    multiplier: 2)
+                .isActive = true
+            default:
+                fatalError()
+            }
+        }
+        
+        func configureToolbar() {
+            toolbar.barTintColor = UIColor.white
+
+            let item1 = UIBarButtonItem.init(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            let item2 = UIBarButtonItem.init(
+                title: "Settings",
+                style: .done,
+                target: self,
+                action: #selector(didPressSettings)
+            )
+            toolbar.setItems([item1, item2], animated: false)
+        }
+
         view.backgroundColor = UIColor.white
 
-        let guide = view.layoutMarginsGuide
+        // Using UIToolbar.init() results in constraint conflicts, so instead we init with a frame.
+        toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 44))
+
+        assembleViewHierarchy()
+        configureToolbar()
+        _configureKeyRows()
+    }
+
+    private func _configureKeyRows() {
+        for (i, octave) in model.octaves.reversed().enumerated() {
+            let firstNote = AbsoluteNote(note: model.tonicNote, octave: octave)
+            let scale = AbsoluteNote.chromaticScale(from: firstNote)
+            rows[i].model = KeyRowView.Model(notes: scale)
+        }
         for row in rows {
-            view.addSubview(row)
-            guide.leadingAnchor.constraint(equalTo: row.leadingAnchor).isActive = true
-            guide.trailingAnchor.constraint(equalTo: row.trailingAnchor).isActive = true
+            row.delegate = self
         }
-        guide.topAnchor.constraint(equalTo: rows.first!.topAnchor).isActive = true
-        guide.bottomAnchor.constraint(equalTo: rows.last!.bottomAnchor).isActive = true
-        for i in [0,1,2,3,4,5] {
-            rows[i].bottomAnchor.constraint(equalTo: rows[i+1].topAnchor).isActive = true
+    }
+    
+    // Allow button presses to register near the edges of the screen.
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+        return .all
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        switch UIDevice.current.userInterfaceIdiom {
+        case .phone:
+            return .landscape
+        case .pad:
+            return .all
+        default:
+            fatalError()
         }
-        for i in [1,2,3,4,5,6] {
-            rows[i].heightAnchor.constraint(equalTo: rows[0].heightAnchor).isActive = true
+    }
+    
+    // MARK: - Target/Action
+    
+    @objc func didPressSettings() {
+        let settingsVC = SettingsViewController()
+        settingsVC.model = model
+        settingsVC.modelDidChange = { [weak self] model in
+            guard let self = self else { return }
+            self.model = model
+            self.didPressSettingsDone()
         }
-        for i in [6,5,4,3,2,1,0] {
-            rows[i].noteOffset = ((6-i) * 12) + 24
-        }
-        for i in [0,1,2,3,4,5,6] {
-            rows[i].delegate = self
-        }
+        settingsVC.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(didPressSettingsDone)
+        )
+        let nav = UINavigationController(rootViewController: settingsVC)
+        present(nav, animated: true)
+    }
+    
+    @objc func didPressSettingsDone() {
+        dismiss(animated: true, completion: nil)
     }
 }
 
 extension GridKeyboardViewController: KeyRowDelegate {
     
-    func keyDidGetPressed(note: Int) {
-        startNote(note: UInt8(note))
+    func keyDidGetPressed(absoluteNote: AbsoluteNote) {
+        startPlaying(absoluteNote: absoluteNote)
     }
     
-    func keyDidGetReleased(note: Int) {
-        endNote(note: UInt8(note))
-    }
-}
-
-
-protocol KeyRowDelegate {
-    func keyDidGetPressed(note: Int)
-    func keyDidGetReleased(note: Int)
-}
-
-
-class KeyRow: UIView {
-    var delegate: KeyRowDelegate? = nil
-    
-    var noteOffset: Int = 0
-    
-    let key1 = UIButton()
-    let key2 = UIButton()
-    let key3 = UIButton()
-    let key4 = UIButton()
-    let key5 = UIButton()
-    let key6 = UIButton()
-    let key7 = UIButton()
-    let key8 = UIButton()
-    let key9 = UIButton()
-    let key10 = UIButton()
-    let key11 = UIButton()
-    let key12 = UIButton()
-
-    var keys: [UIButton] {
-        return [key1, key2, key3, key4, key5, key6, key7, key8, key9, key10, key11, key12]
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        translatesAutoresizingMaskIntoConstraints = false
-        for k in keys {
-            k.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(k)
-            k.layer.borderWidth = 1
-            k.layer.borderColor = UIColor.blue.cgColor
-            k.addTarget(self, action: #selector(keyDidGetPressed(key:)), for: .touchDown)
-            k.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchUpInside)
-            k.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchDragExit)
-            k.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchCancel)
-        }
-        
-        for i in [0,1,2,3,4,5,6,7,8,9,10,11] {
-            keys[i].tag = i
-        }
-
-        for (i, ch) in ["C", "", "D", "", "E", "F", "", "G", "", "A", "", "B"].enumerated() {
-            keys[i].setTitle(ch, for: .normal)
-            keys[i].setTitleColor(UIColor.systemBlue, for: .normal)
-        }
-
-        setNeedsUpdateConstraints()
-    }
-
-    // MARK: - Internals
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private var hasSetUpConstraints: Bool = false
-    override func updateConstraints() {
-        super.updateConstraints()
-        if !hasSetUpConstraints {
-            hasSetUpConstraints = true
-
-            for k in keys {
-                topAnchor.constraint(equalTo: k.topAnchor).isActive = true
-                bottomAnchor.constraint(equalTo: k.bottomAnchor).isActive = true
-            }
-
-            leadingAnchor.constraint(equalTo: key1.leadingAnchor).isActive = true
-            for i in [0,1,2,3,4,5,6,7,8,9,10] {
-                keys[i+1].leadingAnchor.constraint(equalTo: keys[i].trailingAnchor).isActive = true
-            }
-            trailingAnchor.constraint(equalTo: key12.trailingAnchor).isActive = true
-
-            for k in keys {
-                key1.widthAnchor.constraint(equalTo: k.widthAnchor).isActive = true
-            }
-        }
-    }
-
-    @objc func keyDidGetPressed(key: UIButton) {
-        key.backgroundColor = UIColor.yellow
-        delegate?.keyDidGetPressed(note: noteOffset + key.tag)
-    }
-    
-    @objc func keyDidGetReleased(key: UIButton) {
-        key.backgroundColor = UIColor.clear
-        delegate?.keyDidGetReleased(note: noteOffset + key.tag)
+    func keyDidGetReleased(absoluteNote: AbsoluteNote) {
+        stopPlaying(absoluteNote: absoluteNote)
     }
 }
