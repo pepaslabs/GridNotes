@@ -74,6 +74,7 @@ class SettingsViewController: UITableViewController {
         default:
             fatalError()
         }
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 0)
         return cell
     }
     
