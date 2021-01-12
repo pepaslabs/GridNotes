@@ -138,3 +138,13 @@ func stopPlaying(absoluteNote: AbsoluteNote) {
     ret = MusicDeviceMIDIEvent(synthUnit!, command, absoluteNote.midiPitch, 0, 0)
     precondition(ret == kAudioServicesNoError)
 }
+
+func stopPlayingAllNotes() {
+    var ret: OSStatus
+    let channel: UInt32 = 0
+    let command: UInt32 = (MIDICommand.noteOff | channel)
+    for pitch in 0..<128 {
+        ret = MusicDeviceMIDIEvent(synthUnit!, command, UInt32(pitch), 0, 0)
+        precondition(ret == kAudioServicesNoError)
+    }
+}

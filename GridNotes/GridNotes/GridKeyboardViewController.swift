@@ -204,6 +204,9 @@ class GridKeyboardViewController: UIViewController {
     }
     
     private func _configureKeyRows() {
+        self.model.stuckKeys = []
+        stopPlayingAllNotes()
+
         for (i, octave) in model.octaves.reversed().enumerated() {
             _configureKeyRow(index: i, octave: octave)
         }
@@ -275,18 +278,18 @@ class GridKeyboardViewController: UIViewController {
         settingsVC.modelDidChange = { [weak self] model in
             guard let self = self else { return }
             self.set(model: model)
-            self.didPressSettingsDone()
+            self.dismissSettings()
         }
         settingsVC.navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .done,
             target: self,
-            action: #selector(didPressSettingsDone)
+            action: #selector(dismissSettings)
         )
         let nav = UINavigationController(rootViewController: settingsVC)
         present(nav, animated: true)
     }
     
-    @objc func didPressSettingsDone() {
+    @objc func dismissSettings() {
         dismiss(animated: true, completion: nil)
     }
 }
