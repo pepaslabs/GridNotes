@@ -195,4 +195,16 @@ enum Scale: String, CaseIterable {
             return [1,    4,  6,  8,     11,  ].map { $0 - 1 }
         }
     }
+    
+    func absoluteNotes(fromTonic tonic: AbsoluteNote) -> [AbsoluteNote?] {
+        var notes: [AbsoluteNote?] = []
+        var note: AbsoluteNote? = tonic
+        for i in 0..<12 {
+            if semitoneIndices.contains(i) {
+                notes.append(note)
+            }
+            note = note?.next
+        }
+        return notes
+    }
 }

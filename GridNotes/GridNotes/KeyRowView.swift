@@ -65,7 +65,15 @@ class KeyRowView: UIView {
             for i in 0..<(keys.count-1) {
                 keys[i+1].leadingAnchor.constraint(equalTo: keys[i].trailingAnchor).isActive = true
             }
-            trailingAnchor.constraint(equalTo: keys.last!.trailingAnchor).isActive = true
+            
+            if UIDevice.current.userInterfaceIdiom == .pad, keys.count < 12 {
+                keys.first!.widthAnchor.constraint(
+                    equalTo: widthAnchor,
+                    multiplier: 1.0 / 12.0
+                ).isActive = true
+            } else {
+                trailingAnchor.constraint(equalTo: keys.last!.trailingAnchor).isActive = true
+            }
 
             for k in keys.dropFirst() {
                 keys.first!.widthAnchor.constraint(equalTo: k.widthAnchor).isActive = true

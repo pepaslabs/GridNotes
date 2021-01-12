@@ -13,9 +13,18 @@ class GridKeyboardViewController: UIViewController {
     var rows: [KeyRowView] = []
     var toolbar: UIToolbar!
 
-    enum RowStyle {
-        case twelveKeys
-        case sevenKeys
+    enum KeysPerOctave: String, CaseIterable {
+        case chromaticKeys
+        case diatonicKeys
+        
+        var name: String {
+            switch self {
+            case .chromaticKeys:
+                return "Chromatic (all keys)"
+            case .diatonicKeys:
+                return "Diatonic (only in-scale keys)"
+            }
+        }
     }
     
     enum NonDiatonicKeyStyle: String, CaseIterable {
@@ -36,7 +45,7 @@ class GridKeyboardViewController: UIViewController {
         var tonicNote: Note
         var scale: Scale
         var octaves: [Octave]
-        var rowStyle: RowStyle
+        var keysPerOctave: KeysPerOctave
         var nonScaleStyle: NonDiatonicKeyStyle
         
         static var defaultModel: Model {
@@ -46,7 +55,7 @@ class GridKeyboardViewController: UIViewController {
                     tonicNote: .C,
                     scale: .major,
                     octaves: Octave.octavesForPhone,
-                    rowStyle: .twelveKeys,
+                    keysPerOctave: .diatonicKeys,
                     nonScaleStyle: .disabled
                 )
             case .pad:
@@ -54,7 +63,7 @@ class GridKeyboardViewController: UIViewController {
                     tonicNote: .C,
                     scale: .major,
                     octaves: Octave.octavesForPad,
-                    rowStyle: .twelveKeys,
+                    keysPerOctave: .chromaticKeys,
                     nonScaleStyle: .disabled
                 )
             default:
@@ -178,16 +187,29 @@ class GridKeyboardViewController: UIViewController {
         let firstNote = AbsoluteNote(note: model.tonicNote, octave: octave)
         let allNotes = AbsoluteNote.chromaticScale(from: firstNote)
         let scaleIndices = model.scale.semitoneIndices
-        let styledNotes: [(AbsoluteNote, KeyRowView.KeyStyle)?] = allNotes.enumerated().map { (index, note) in
-            if let note = note {
-                if scaleIndices.contains(index) {
-                    return (note, .normal)
+
+        let styledNotes: [(AbsoluteNote, KeyRowView.KeyStyle)?]
+        switch model.keysPerOctave {
+
+        case .chromaticKeys:
+            styledNotes = allNotes.enumerated().map { (index, note) in
+                if let note = note {
+                    if scaleIndices.contains(index) {
+                        return (note, .normal)
+                    } else {
+                        let keyStyle = KeyRowView.KeyStyle(rawValue: model.nonScaleStyle.rawValue)!
+                        return (note, keyStyle)
+                    }
                 } else {
-                    let keyStyle = KeyRowView.KeyStyle(rawValue: model.nonScaleStyle.rawValue)!
-                    return (note, keyStyle)
+                    return nil
                 }
-            } else {
-                return nil
+
+            }
+
+        case .diatonicKeys:
+            styledNotes = model.scale.absoluteNotes(fromTonic: firstNote).map { note in
+                guard let note = note else { return nil }
+                return (note, KeyRowView.KeyStyle.normal)
             }
 
         }

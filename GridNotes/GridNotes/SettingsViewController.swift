@@ -26,6 +26,7 @@ class SettingsViewController: UITableViewController {
     private let _tonicSection: Int = 0
     private let _scaleSection: Int = 1
     private let _nonDiatonicSection: Int = 2
+    private let _octaveKeysSection: Int = 3
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,7 @@ class SettingsViewController: UITableViewController {
     // MARK: - UITableViewDelegate / UITableViewDataSource
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -48,6 +49,8 @@ class SettingsViewController: UITableViewController {
             return "Scale"
         case _nonDiatonicSection:
             return "Non-Diatonic Note Treatment"
+        case _octaveKeysSection:
+            return "Keys per Octave"
         default:
             fatalError()
         }
@@ -61,6 +64,8 @@ class SettingsViewController: UITableViewController {
             return Scale.allCases.count
         case _nonDiatonicSection:
             return GridKeyboardViewController.NonDiatonicKeyStyle.allCases.count
+        case _octaveKeysSection:
+            return GridKeyboardViewController.KeysPerOctave.allCases.count
         default:
             fatalError()
         }
@@ -69,7 +74,7 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
         switch indexPath.section {
-        case _tonicSection, _scaleSection, _nonDiatonicSection:
+        case _tonicSection, _scaleSection, _nonDiatonicSection, _octaveKeysSection:
             _style(cell: cell, indexPath: indexPath)
         default:
             fatalError()
@@ -86,6 +91,8 @@ class SettingsViewController: UITableViewController {
             model.scale = Scale.allCases[indexPath.row]
         case _nonDiatonicSection:
             model.nonScaleStyle = GridKeyboardViewController.NonDiatonicKeyStyle.allCases[indexPath.row]
+        case _octaveKeysSection:
+            model.keysPerOctave = GridKeyboardViewController.KeysPerOctave.allCases[indexPath.row]
         default:
             fatalError()
         }
@@ -115,6 +122,11 @@ class SettingsViewController: UITableViewController {
             let style = GridKeyboardViewController.NonDiatonicKeyStyle.allCases[indexPath.row]
             isSelected = model.nonScaleStyle == style
             cell.textLabel?.text = style.name
+
+        case _octaveKeysSection:
+            let keyCount = GridKeyboardViewController.KeysPerOctave.allCases[indexPath.row]
+            isSelected = model.keysPerOctave == keyCount
+            cell.textLabel?.text = keyCount.name
             
         default:
             fatalError()
@@ -133,7 +145,7 @@ class SettingsViewController: UITableViewController {
         for indexPath in tableView.indexPathsForVisibleRows ?? [] {
             guard let cell = tableView.cellForRow(at: indexPath) else { continue }
             switch indexPath.section {
-            case _tonicSection, _scaleSection, _nonDiatonicSection:
+            case _tonicSection, _scaleSection, _nonDiatonicSection, _octaveKeysSection:
                 _style(cell: cell, indexPath: indexPath)
             default:
                 fatalError()
