@@ -24,12 +24,15 @@ class KeyRowView: UIView {
     
     struct Model {
         var styledNotes: [(AbsoluteNote, KeyStyle)?] = []
+        var stickyKeys: Bool = false
+        var stuckKeys: Set<Int> = []
     }
 
-    var model: Model = Model() {
-        didSet {
-            _reloadViews()
-        }
+    private(set) var model: Model = Model()
+    
+    func set(model: Model) {
+        self.model = model
+        _reloadViews()
     }
     
     var delegate: KeyRowDelegate? = nil
@@ -135,10 +138,14 @@ class KeyRowView: UIView {
                     key.backgroundColor = KeyRowView._shadedGray
                 }
                 
-                key.addTarget(self, action: #selector(keyDidGetPressed(key:)), for: .touchDown)
-                key.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchUpInside)
-                key.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchDragExit)
-                key.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchCancel)
+                if model.stickyKeys {
+                    key.addTarget(self, action: #selector(keyDidGetToggled(key:)), for: .touchDown)
+                } else {
+                    key.addTarget(self, action: #selector(keyDidGetPressed(key:)), for: .touchDown)
+                    key.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchUpInside)
+                    key.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchDragExit)
+                    key.addTarget(self, action: #selector(keyDidGetReleased(key:)), for: .touchCancel)
+                }
 
             } else {
                 key.isEnabled = false
@@ -170,6 +177,25 @@ class KeyRowView: UIView {
                 key.backgroundColor = KeyRowView._shadedGray
             }
             delegate?.keyDidGetReleased(absoluteNote: absoluteNote)
+        }
+    }
+    
+    @objc func keyDidGetToggled(key: UIButton) {
+        if let (absoluteNote, keyStyle) = model.styledNotes[key.tag] {
+            if model.stuckKeys.contains(key.tag) {
+                model.stuckKeys.remove(key.tag)
+                switch keyStyle {
+                case .normal:
+                    key.backgroundColor = UIColor.white
+                case .shaded, .disabled:
+                    key.backgroundColor = KeyRowView._shadedGray
+                }
+                delegate?.keyDidGetReleased(absoluteNote: absoluteNote)
+            } else {
+                model.stuckKeys.insert(key.tag)
+                key.backgroundColor = UIColor.yellow
+                delegate?.keyDidGetPressed(absoluteNote: absoluteNote)
+            }
         }
     }
 }

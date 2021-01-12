@@ -71,7 +71,7 @@ func initAudio() {
     precondition(ret == kAudioServicesNoError)
     
     // load a sound font.
-    var soundFont: URL = Bundle.main.url(forResource: "Rhodes EP", withExtension: "sf2")!
+    var soundFont: URL = Bundle.main.url(forResource: "Saw Wave", withExtension: "sf2")!
     ret = AudioUnitSetProperty(
         synthUnit!,
         AudioUnitPropertyID(kMusicDeviceProperty_SoundBankURL),

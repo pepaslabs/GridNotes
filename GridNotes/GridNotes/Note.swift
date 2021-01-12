@@ -8,7 +8,7 @@
 import Foundation
 
 
-enum Note: String, CaseIterable {
+enum Note: String, CaseIterable, Hashable {
     case A = "A"
     case AsBb = "A♯/B♭"
     case B = "B"
@@ -59,7 +59,7 @@ enum Note: String, CaseIterable {
 }
 
 
-enum Octave: Int {
+enum Octave: Int, Hashable {
     case zero = 0
     case one
     case two
@@ -89,7 +89,7 @@ enum Octave: Int {
 }
 
 
-struct AbsoluteNote {
+struct AbsoluteNote: Hashable {
     var note: Note
     var octave: Octave
     

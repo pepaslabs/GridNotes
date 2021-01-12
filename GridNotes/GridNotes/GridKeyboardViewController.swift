@@ -47,6 +47,8 @@ class GridKeyboardViewController: UIViewController {
         var octaves: [Octave]
         var keysPerOctave: KeysPerOctave
         var nonScaleStyle: NonDiatonicKeyStyle
+        var stickyKeys: Bool
+        var stuckKeys: Set<AbsoluteNote>
         
         static var defaultModel: Model {
             switch UIDevice.current.userInterfaceIdiom {
@@ -56,7 +58,9 @@ class GridKeyboardViewController: UIViewController {
                     scale: .major,
                     octaves: Octave.octavesForPhone,
                     keysPerOctave: .diatonicKeys,
-                    nonScaleStyle: .disabled
+                    nonScaleStyle: .disabled,
+                    stickyKeys: false,
+                    stuckKeys: []
                 )
             case .pad:
                 return Model(
@@ -64,7 +68,9 @@ class GridKeyboardViewController: UIViewController {
                     scale: .major,
                     octaves: Octave.octavesForPad,
                     keysPerOctave: .chromaticKeys,
-                    nonScaleStyle: .disabled
+                    nonScaleStyle: .disabled,
+                    stickyKeys: false,
+                    stuckKeys: []
                 )
             default:
                 fatalError()
@@ -72,11 +78,12 @@ class GridKeyboardViewController: UIViewController {
         }
     }
     
-    var model: Model = Model.defaultModel {
-        didSet {
-            _configureToolbar()
-            _configureKeyRows()
-        }
+    private(set) var model: Model = Model.defaultModel
+    
+    func set(model: Model) {
+        self.model = model
+        _configureToolbar()
+        _configureKeyRows()
     }
     
     // MARK: - Internals
@@ -162,6 +169,21 @@ class GridKeyboardViewController: UIViewController {
             UIBarButtonItem.init(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         )
 
+        if model.stuckKeys.count > 0 {
+            items.append(
+                UIBarButtonItem.init(
+                    title: "Clear",
+                    style: .done,
+                    target: self,
+                    action: #selector(didPressClear)
+                )
+            )
+
+            items.append(
+                UIBarButtonItem.init(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            )
+        }
+
         items.append(
             UIBarButtonItem.init(
                 title: "\(model.tonicNote.name) \(model.scale.name)",
@@ -174,6 +196,13 @@ class GridKeyboardViewController: UIViewController {
         toolbar.setItems(items, animated: false)
     }
 
+    @objc func didPressClear() {
+        for note in model.stuckKeys {
+            keyDidGetReleased(absoluteNote: note)
+        }
+        _configureKeyRows()
+    }
+    
     private func _configureKeyRows() {
         for (i, octave) in model.octaves.reversed().enumerated() {
             _configureKeyRow(index: i, octave: octave)
@@ -214,7 +243,8 @@ class GridKeyboardViewController: UIViewController {
 
         }
 
-        rows[index].model = KeyRowView.Model(styledNotes: styledNotes)
+        let rowModel = KeyRowView.Model(styledNotes: styledNotes, stickyKeys: model.stickyKeys)
+        rows[index].set(model: rowModel)
     }
     
     // Allow button presses to register near the edges of the screen.
@@ -244,7 +274,7 @@ class GridKeyboardViewController: UIViewController {
         settingsVC.model = model
         settingsVC.modelDidChange = { [weak self] model in
             guard let self = self else { return }
-            self.model = model
+            self.set(model: model)
             self.didPressSettingsDone()
         }
         settingsVC.navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -265,9 +295,17 @@ extension GridKeyboardViewController: KeyRowDelegate {
     
     func keyDidGetPressed(absoluteNote: AbsoluteNote) {
         startPlaying(absoluteNote: absoluteNote)
+        if model.stickyKeys {
+            model.stuckKeys.insert(absoluteNote)
+        }
+        _configureToolbar()
     }
     
     func keyDidGetReleased(absoluteNote: AbsoluteNote) {
         stopPlaying(absoluteNote: absoluteNote)
+        if model.stickyKeys {
+            model.stuckKeys.remove(absoluteNote)
+        }
+        _configureToolbar()
     }
 }
