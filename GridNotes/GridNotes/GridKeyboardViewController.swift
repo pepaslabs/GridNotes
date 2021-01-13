@@ -259,17 +259,6 @@ class GridKeyboardViewController: UIViewController {
         return true
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .phone:
-            return .landscape
-        case .pad:
-            return .all
-        default:
-            fatalError()
-        }
-    }
-    
     // MARK: - Target/Action
     
     @objc func didPressSettings() {
