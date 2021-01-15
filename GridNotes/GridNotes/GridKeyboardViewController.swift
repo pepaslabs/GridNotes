@@ -91,10 +91,6 @@ class GridKeyboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        for _ in model.octaves {
-            rows.append(KeyRowView())
-        }
-
         func assembleViewHierarchy() {
             toolbar.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(toolbar)
@@ -141,6 +137,10 @@ class GridKeyboardViewController: UIViewController {
             }
         }
         
+        for _ in model.octaves {
+            rows.append(KeyRowView())
+        }
+
         view.backgroundColor = UIColor.white
 
         // Using UIToolbar.init() results in constraint conflicts, so instead we init with a frame.
@@ -156,7 +156,7 @@ class GridKeyboardViewController: UIViewController {
         var items = [UIBarButtonItem]()
 
         let titleItem = UIBarButtonItem.init(
-            title: "GridNotes",
+            title: "GridNotes \(Bundle.main.marketingVersion)",
             style: .done,
             target: nil,
             action: nil
@@ -299,5 +299,12 @@ extension GridKeyboardViewController: KeyRowDelegate {
             model.stuckKeys.remove(absoluteNote)
         }
         _configureToolbar()
+    }
+}
+
+
+extension Bundle {
+    var marketingVersion: String {
+        return infoDictionary!["CFBundleShortVersionString"] as! String
     }
 }

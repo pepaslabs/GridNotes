@@ -69,7 +69,8 @@ var g_synthUnit: AudioUnit?
 
 func initAudio() {
     // Allow audio output even when silent switch engaged.
-    try? AVAudioSession.sharedInstance().setCategory(.playback)
+    // Allow the piano to play mixed with the audio of other apps (e.g. youtube backing tracks).
+    try! AVAudioSession.sharedInstance().setCategory(.playback, options: [.mixWithOthers])
 
     // The below code was adapted from https://rollout.io/blog/building-a-midi-music-app-for-ios-in-swift/
 
