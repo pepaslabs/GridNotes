@@ -15,7 +15,6 @@
 		2B45540E25AB71CD00A95718 /* GridKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */; };
 		2B45541325AB722300A95718 /* Midi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45541225AB722300A95718 /* Midi.swift */; };
 		2B45542825AB735000A95718 /* Rock Organ.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541825AB735000A95718 /* Rock Organ.sf2 */; };
-		2B45542925AB735000A95718 /* Sine Wave.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541925AB735000A95718 /* Sine Wave.sf2 */; };
 		2B45542A25AB735000A95718 /* Ohh Voices.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541A25AB735000A95718 /* Ohh Voices.sf2 */; };
 		2B45542B25AB735000A95718 /* Rhodes EP.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541B25AB735000A95718 /* Rhodes EP.sf2 */; };
 		2B45542C25AB735000A95718 /* Violin.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541C25AB735000A95718 /* Violin.sf2 */; };
@@ -67,7 +66,6 @@
 		2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridKeyboardViewController.swift; sourceTree = "<group>"; };
 		2B45541225AB722300A95718 /* Midi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Midi.swift; sourceTree = "<group>"; };
 		2B45541825AB735000A95718 /* Rock Organ.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rock Organ.sf2"; sourceTree = "<group>"; };
-		2B45541925AB735000A95718 /* Sine Wave.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sine Wave.sf2"; sourceTree = "<group>"; };
 		2B45541A25AB735000A95718 /* Ohh Voices.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ohh Voices.sf2"; sourceTree = "<group>"; };
 		2B45541B25AB735000A95718 /* Rhodes EP.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rhodes EP.sf2"; sourceTree = "<group>"; };
 		2B45541C25AB735000A95718 /* Violin.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Violin.sf2; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 			isa = PBXGroup;
 			children = (
 				2B45541825AB735000A95718 /* Rock Organ.sf2 */,
-				2B45541925AB735000A95718 /* Sine Wave.sf2 */,
 				2B45541A25AB735000A95718 /* Ohh Voices.sf2 */,
 				2B45541B25AB735000A95718 /* Rhodes EP.sf2 */,
 				2B45541C25AB735000A95718 /* Violin.sf2 */,
@@ -298,7 +295,6 @@
 				2B45543625AB735000A95718 /* Cello.sf2 in Resources */,
 				2B45543025AB735000A95718 /* French Horns.sf2 in Resources */,
 				2B45542E25AB735000A95718 /* Church Organ 2.sf2 in Resources */,
-				2B45542925AB735000A95718 /* Sine Wave.sf2 in Resources */,
 				2B45543525AB735000A95718 /* Trumpet.sf2 in Resources */,
 				2B45543325AB735000A95718 /* Saw Wave.sf2 in Resources */,
 				2B45543425AB735000A95718 /* Overdrive Guitar.sf2 in Resources */,

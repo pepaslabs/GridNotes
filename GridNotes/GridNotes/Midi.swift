@@ -23,7 +23,6 @@ enum Instrument: String, CaseIterable {
     case rockOrgan = "Rock Organ"
     case churchOrgan2 = "Church Organ 2"
 
-    case sineWave = "Sine Wave"
     case sawWave = "Saw Wave"
     case synthStrings2 = "Synth Strings 2"
 
