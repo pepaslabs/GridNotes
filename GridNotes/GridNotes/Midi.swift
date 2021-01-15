@@ -16,6 +16,7 @@ enum MIDICommand {
     static let patchChange: UInt32 = 0xC0
 }
 
+/// SoundFont instruments
 enum Instrument: String, CaseIterable {
     case yamahaGrandPiano = "Yamaha Grand Piano"
     case harpsichord = "Harpsichord"
@@ -57,15 +58,16 @@ enum Instrument: String, CaseIterable {
     }
 }
 
+
+// Globals (don't @ me).
 var g_instrument: Instrument = .rhodesEP
-
-
 var g_graph: AUGraph?
 var g_synthNode: AUNode = AUNode()
 var g_outputNode: AUNode = AUNode()
 var g_synthUnit: AudioUnit?
 
 
+/// Start MIDI audio using the g_instrument SoundFont instrument.
 func initAudio() {
     // Allow audio output even when silent switch engaged.
     // Allow the piano to play mixed with the audio of other apps (e.g. youtube backing tracks).
@@ -168,6 +170,7 @@ func initAudio() {
 }
 
 
+/// Shutdown MIDI audio.
 func deinitAudio() {
     var ret: OSStatus
 
@@ -182,6 +185,7 @@ func deinitAudio() {
 }
 
 
+/// Play a MIDI note.
 func startPlaying(absoluteNote: AbsoluteNote) {
     var ret: OSStatus
     let channel: UInt32 = 0
@@ -192,6 +196,7 @@ func startPlaying(absoluteNote: AbsoluteNote) {
 }
 
 
+/// Stop a MIDI note.
 func stopPlaying(absoluteNote: AbsoluteNote) {
     var ret: OSStatus
     let channel: UInt32 = 0
@@ -201,6 +206,7 @@ func stopPlaying(absoluteNote: AbsoluteNote) {
 }
 
 
+/// Stop all MIDI notes.
 func stopPlayingAllNotes() {
     var ret: OSStatus
     let channel: UInt32 = 0

@@ -37,8 +37,6 @@ class KeyRowView: UIView {
     
     var delegate: KeyRowDelegate? = nil
 
-    var keys: [UIButton] = []
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
@@ -48,42 +46,52 @@ class KeyRowView: UIView {
     // MARK: - Internals
 
     private static let _shadedGray: UIColor = UIColor(white: 0.85, alpha: 1)
+
+    private var _keys: [UIButton] = []
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private var _hasSetUpConstraints: Bool = false
     override func updateConstraints() {
         super.updateConstraints()
         if !_hasSetUpConstraints {
             _hasSetUpConstraints = true
 
-            for k in keys {
+            // pin each key to the top and bottom of the row.
+            for k in _keys {
                 topAnchor.constraint(equalTo: k.topAnchor).isActive = true
                 bottomAnchor.constraint(equalTo: k.bottomAnchor).isActive = true
             }
 
-            leadingAnchor.constraint(equalTo: keys.first!.leadingAnchor).isActive = true
-            for i in 0..<(keys.count-1) {
-                keys[i+1].leadingAnchor.constraint(equalTo: keys[i].trailingAnchor).isActive = true
+            // pin the first key's leading edge to the leading edge of the row.
+            leadingAnchor.constraint(equalTo: _keys.first!.leadingAnchor).isActive = true
+            
+            // stack the keys horizontally.
+            for i in 0..<(_keys.count-1) {
+                _keys[i+1].leadingAnchor.constraint(equalTo: _keys[i].trailingAnchor).isActive = true
             }
             
-            if UIDevice.current.userInterfaceIdiom == .pad, keys.count < 12 {
-                keys.first!.widthAnchor.constraint(
+            if UIDevice.current.userInterfaceIdiom == .pad, _keys.count < 12 {
+                // On iPad, when using less than 12 keys, don't expand the row to full width (use 1/12th per key).
+                _keys.first!.widthAnchor.constraint(
                     equalTo: widthAnchor,
                     multiplier: 1.0 / 12.0
                 ).isActive = true
             } else {
-                trailingAnchor.constraint(equalTo: keys.last!.trailingAnchor).isActive = true
+                // otherwise, pin the last key's trailing edge to the row's trailing edge.
+                trailingAnchor.constraint(equalTo: _keys.last!.trailingAnchor).isActive = true
             }
 
-            for k in keys.dropFirst() {
-                keys.first!.widthAnchor.constraint(equalTo: k.widthAnchor).isActive = true
+            // set the keys to have equal widths.
+            for k in _keys.dropFirst() {
+                _keys.first!.widthAnchor.constraint(equalTo: k.widthAnchor).isActive = true
             }
         }
     }
+    private var _hasSetUpConstraints: Bool = false
 
+    /// (Re)Construct the views according to the model.
     private func _reloadViews() {
         
         func buttonText(absoluteNote: AbsoluteNote) -> String {
@@ -108,7 +116,7 @@ class KeyRowView: UIView {
         for subview in subviews {
             subview.removeFromSuperview()
         }
-        keys.removeAll()
+        _keys.removeAll()
         
         for (i, styledNote) in model.styledNotes.enumerated() {
             let key = UIButton(type: .system)
@@ -152,7 +160,7 @@ class KeyRowView: UIView {
                 key.backgroundColor = KeyRowView._shadedGray
             }
 
-            keys.append(key)
+            _keys.append(key)
         }
 
         _hasSetUpConstraints = false

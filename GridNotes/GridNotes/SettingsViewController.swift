@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
 
-    var model: GridKeyboardViewController.Model = GridKeyboardViewController.Model.defaultModel
+    private(set) var model: GridKeyboardViewController.Model = GridKeyboardViewController.Model.defaultModel
     
     func set(model: GridKeyboardViewController.Model) {
         self.model = model
@@ -50,7 +50,7 @@ class SettingsViewController: UITableViewController {
         case _scaleSection:
             return "Scale"
         case _nonDiatonicSection:
-            return "Non-Diatonic Note Treatment"
+            return "Non-Diatonic (Out-of-Scale) Note Treatment"
         case _octaveKeysSection:
             return "Keys per Octave"
         case _stickySection:
