@@ -10,16 +10,16 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
 
-    private(set) var model: GridKeyboardViewController.Model = GridKeyboardViewController.Model.defaultModel
+    private(set) var state: AppState = AppState.defaultState
     
-    func set(model: GridKeyboardViewController.Model) {
-        self.model = model
+    func set(state: AppState) {
+        self.state = state
         if isViewLoaded {
             tableView.reloadData()
         }
     }
 
-    var modelDidChange: ((GridKeyboardViewController.Model) -> ())? = nil
+    var appStateDidChange: ((AppState) -> ())? = nil
     
     // MARK: - Internals
     
@@ -29,6 +29,7 @@ class SettingsViewController: UITableViewController {
     private let _octaveKeysSection: Int = 3
     private let _stickySection: Int = 4
     private let _instrumentSection: Int = 5
+    private let _interfaceSection: Int = 6
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +41,7 @@ class SettingsViewController: UITableViewController {
     // MARK: - UITableViewDelegate / UITableViewDataSource
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 6
+        return 7
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -57,6 +58,8 @@ class SettingsViewController: UITableViewController {
             return "Sticky Keys"
         case _instrumentSection:
             return "Instrument (Fluid R3 SoundFont)"
+        case _interfaceSection:
+            return "Interface"
         default:
             fatalError()
         }
@@ -69,13 +72,15 @@ class SettingsViewController: UITableViewController {
         case _scaleSection:
             return Scale.allCases.count
         case _nonDiatonicSection:
-            return GridKeyboardViewController.NonDiatonicKeyStyle.allCases.count
+            return NonDiatonicKeyStyle.allCases.count
         case _octaveKeysSection:
-            return GridKeyboardViewController.KeysPerOctave.allCases.count
+            return KeysPerOctave.allCases.count
         case _stickySection:
             return 2
         case _instrumentSection:
             return Instrument.allCases.count
+        case _interfaceSection:
+            return Interface.allCases.count
         default:
             fatalError()
         }
@@ -84,7 +89,8 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
         switch indexPath.section {
-        case _tonicSection, _scaleSection, _nonDiatonicSection, _octaveKeysSection, _stickySection, _instrumentSection:
+        case _tonicSection, _scaleSection, _nonDiatonicSection, _octaveKeysSection, _stickySection,
+             _instrumentSection, _interfaceSection:
             _style(cell: cell, indexPath: indexPath)
         default:
             fatalError()
@@ -96,19 +102,21 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case _tonicSection:
-            model.tonicNote = Note.allCases[indexPath.row]
+            state.tonicNote = Note.allCases[indexPath.row]
         case _scaleSection:
-            model.scale = Scale.allCases[indexPath.row]
+            state.scale = Scale.allCases[indexPath.row]
         case _nonDiatonicSection:
-            model.nonScaleStyle = GridKeyboardViewController.NonDiatonicKeyStyle.allCases[indexPath.row]
+            state.nonScaleStyle = NonDiatonicKeyStyle.allCases[indexPath.row]
         case _octaveKeysSection:
-            model.keysPerOctave = GridKeyboardViewController.KeysPerOctave.allCases[indexPath.row]
+            state.keysPerOctave = KeysPerOctave.allCases[indexPath.row]
         case _stickySection:
-            model.stickyKeys = (indexPath.row == 0)
+            state.stickyKeys = (indexPath.row == 0)
         case _instrumentSection:
             deinitAudio()
             g_instrument = Instrument.allCases[indexPath.row]
             initAudio()
+        case _interfaceSection:
+            state.interface = Interface.allCases[indexPath.row]
         default:
             fatalError()
         }
@@ -117,7 +125,7 @@ class SettingsViewController: UITableViewController {
         for iterated in tableView.indexPathsForSelectedRows ?? [] {
             tableView.deselectRow(at: iterated, animated: true)
         }
-        modelDidChange?(model)
+        appStateDidChange?(state)
     }
     
     private func _style(cell: UITableViewCell, indexPath: IndexPath) {
@@ -126,31 +134,36 @@ class SettingsViewController: UITableViewController {
 
         case _tonicSection:
             let note = Note.allCases[indexPath.row]
-            isSelected = model.tonicNote == note
+            isSelected = state.tonicNote == note
             cell.textLabel?.text = note.name
 
         case _scaleSection:
             let scale = Scale.allCases[indexPath.row]
-            isSelected = model.scale == scale
+            isSelected = state.scale == scale
             cell.textLabel?.text = scale.name
 
         case _nonDiatonicSection:
-            let style = GridKeyboardViewController.NonDiatonicKeyStyle.allCases[indexPath.row]
-            isSelected = model.nonScaleStyle == style
+            let style = NonDiatonicKeyStyle.allCases[indexPath.row]
+            isSelected = state.nonScaleStyle == style
             cell.textLabel?.text = style.name
 
         case _octaveKeysSection:
-            let keyCount = GridKeyboardViewController.KeysPerOctave.allCases[indexPath.row]
-            isSelected = model.keysPerOctave == keyCount
+            let keyCount = KeysPerOctave.allCases[indexPath.row]
+            isSelected = state.keysPerOctave == keyCount
             cell.textLabel?.text = keyCount.name
             
         case _stickySection:
-            isSelected = (model.stickyKeys && indexPath.row == 0) || (!model.stickyKeys && indexPath.row == 1)
+            isSelected = (state.stickyKeys && indexPath.row == 0) || (!state.stickyKeys && indexPath.row == 1)
             cell.textLabel?.text = (indexPath.row == 0) ? "Enabled" : "Disabled"
             
         case _instrumentSection:
             isSelected = g_instrument == Instrument.allCases[indexPath.row]
             cell.textLabel?.text = Instrument.allCases[indexPath.row].displayName
+        
+        case _interfaceSection:
+            let interface = Interface.allCases[indexPath.row]
+            isSelected = state.interface == interface
+            cell.textLabel?.text = interface.name
             
         default:
             fatalError()
@@ -169,7 +182,8 @@ class SettingsViewController: UITableViewController {
         for indexPath in tableView.indexPathsForVisibleRows ?? [] {
             guard let cell = tableView.cellForRow(at: indexPath) else { continue }
             switch indexPath.section {
-            case _tonicSection, _scaleSection, _nonDiatonicSection, _octaveKeysSection, _stickySection, _instrumentSection:
+            case _tonicSection, _scaleSection, _nonDiatonicSection, _octaveKeysSection, _stickySection,
+                 _instrumentSection, _interfaceSection:
                 _style(cell: cell, indexPath: indexPath)
             default:
                 fatalError()

@@ -31,7 +31,12 @@
 		2B45543725AB735000A95718 /* Yamaha Grand Piano.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45542725AB735000A95718 /* Yamaha Grand Piano.sf2 */; };
 		2B45543F25AB8D6C00A95718 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45543E25AB8D6C00A95718 /* SettingsViewController.swift */; };
 		2B45544425ABDEA800A95718 /* KeyRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45544325ABDEA800A95718 /* KeyRowView.swift */; };
-		2B45544925ACC62E00A95718 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45544825ACC62E00A95718 /* Note.swift */; };
+		2B45544925ACC62E00A95718 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45544825ACC62E00A95718 /* AppState.swift */; };
+		2B6D2B9D25B510FC003AE01F /* RingKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2B9C25B510FC003AE01F /* RingKeyboardViewController.swift */; };
+		2B6D2BA225B51140003AE01F /* CGRect+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BA125B51140003AE01F /* CGRect+.swift */; };
+		2B6D2BA725B5116C003AE01F /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BA625B5116C003AE01F /* UIColor+.swift */; };
+		2B6D2BAC25B511B6003AE01F /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BAB25B511B6003AE01F /* Bundle+.swift */; };
+		2B6D2BB425B51BF2003AE01F /* KeyboardContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BB325B51BF2003AE01F /* KeyboardContainerController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +87,12 @@
 		2B45542725AB735000A95718 /* Yamaha Grand Piano.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Yamaha Grand Piano.sf2"; sourceTree = "<group>"; };
 		2B45543E25AB8D6C00A95718 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2B45544325ABDEA800A95718 /* KeyRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyRowView.swift; sourceTree = "<group>"; };
-		2B45544825ACC62E00A95718 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		2B45544825ACC62E00A95718 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		2B6D2B9C25B510FC003AE01F /* RingKeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingKeyboardViewController.swift; sourceTree = "<group>"; };
+		2B6D2BA125B51140003AE01F /* CGRect+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+.swift"; sourceTree = "<group>"; };
+		2B6D2BA625B5116C003AE01F /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		2B6D2BAB25B511B6003AE01F /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
+		2B6D2BB325B51BF2003AE01F /* KeyboardContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardContainerController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,11 +144,16 @@
 			isa = PBXGroup;
 			children = (
 				2B45541225AB722300A95718 /* Midi.swift */,
-				2B45544825ACC62E00A95718 /* Note.swift */,
+				2B45544825ACC62E00A95718 /* AppState.swift */,
 				2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */,
 				2B45544325ABDEA800A95718 /* KeyRowView.swift */,
+				2B6D2B9C25B510FC003AE01F /* RingKeyboardViewController.swift */,
 				2B45543E25AB8D6C00A95718 /* SettingsViewController.swift */,
 				2B4553D125AB706500A95718 /* AppDelegate.swift */,
+				2B6D2BB325B51BF2003AE01F /* KeyboardContainerController.swift */,
+				2B6D2BA125B51140003AE01F /* CGRect+.swift */,
+				2B6D2BA625B5116C003AE01F /* UIColor+.swift */,
+				2B6D2BAB25B511B6003AE01F /* Bundle+.swift */,
 				2B4553DA25AB706700A95718 /* Assets.xcassets */,
 				2B4553DC25AB706700A95718 /* LaunchScreen.storyboard */,
 				2B4553DF25AB706700A95718 /* Info.plist */,
@@ -331,12 +346,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B6D2B9D25B510FC003AE01F /* RingKeyboardViewController.swift in Sources */,
 				2B45540E25AB71CD00A95718 /* GridKeyboardViewController.swift in Sources */,
 				2B45541325AB722300A95718 /* Midi.swift in Sources */,
+				2B6D2BA225B51140003AE01F /* CGRect+.swift in Sources */,
 				2B4553D225AB706500A95718 /* AppDelegate.swift in Sources */,
 				2B45544425ABDEA800A95718 /* KeyRowView.swift in Sources */,
+				2B6D2BB425B51BF2003AE01F /* KeyboardContainerController.swift in Sources */,
 				2B45543F25AB8D6C00A95718 /* SettingsViewController.swift in Sources */,
-				2B45544925ACC62E00A95718 /* Note.swift in Sources */,
+				2B45544925ACC62E00A95718 /* AppState.swift in Sources */,
+				2B6D2BA725B5116C003AE01F /* UIColor+.swift in Sources */,
+				2B6D2BAC25B511B6003AE01F /* Bundle+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +525,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = CPE62329FB;
 				INFOPLIST_FILE = GridNotes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
@@ -525,6 +546,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = CPE62329FB;
 				INFOPLIST_FILE = GridNotes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;

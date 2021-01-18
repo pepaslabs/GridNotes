@@ -13,11 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+
         initAudio()
         window = UIWindow()
         window?.makeKeyAndVisible()
-        window?.rootViewController = GridKeyboardViewController()
+        window?.rootViewController = KeyboardContainerController(initialState: AppState.defaultState)
         return true
     }
 }

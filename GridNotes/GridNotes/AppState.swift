@@ -5,7 +5,49 @@
 //  Created by Jason Pepas on 1/11/21.
 //
 
-import Foundation
+import UIKit
+
+
+struct AppState {
+    var interface: Interface = .grid
+    var tonicNote: Note = .C
+    var scale: Scale = .major
+    var octaves: [Octave]
+    var keysPerOctave: KeysPerOctave
+    var nonScaleStyle: NonDiatonicKeyStyle = .disabled
+    var stickyKeys: Bool = false
+    var stuckKeys: Set<AbsoluteNote> = []
+    
+    static var defaultState: AppState {
+        switch UIDevice.current.userInterfaceIdiom {
+        case .phone:
+            return AppState(
+                octaves: Octave.octavesForPhone,
+                keysPerOctave: .diatonicKeys
+            )
+        case .pad:
+            return AppState(
+                octaves: Octave.octavesForPad,
+                keysPerOctave: .chromaticKeys
+            )
+        default:
+            fatalError()
+        }
+    }
+}
+
+
+enum Interface: String, CaseIterable {
+    case grid
+    case ring
+    
+    var name: String {
+        switch self {
+        case .grid: return "Grid"
+        case .ring: return "Ring"
+        }
+    }
+}
 
 
 enum Note: String, CaseIterable, Hashable {
@@ -110,6 +152,24 @@ struct AbsoluteNote: Hashable {
         }
     }
     
+    var buttonText: String {
+        switch note {
+        case .A, .B, .C, .D, .E, .F, .G:
+            return "\(note.rawValue)\(octave.rawValue)"
+        case .AsBb:
+            return "A\(octave.rawValue)♯\nB\(octave.rawValue)♭"
+        case .CsDb:
+            return "C\(octave.rawValue)♯\nD\(octave.rawValue)♭"
+        case .DsEb:
+            return "D\(octave.rawValue)♯\nE\(octave.rawValue)♭"
+        case .FsGb:
+            return "F\(octave.rawValue)♯\nG\(octave.rawValue)♭"
+        case .GsAb:
+            return "G\(octave.rawValue)♯\nA\(octave.rawValue)♭"
+        }
+    }
+
+    
     var next: AbsoluteNote? {
         switch note {
         case .GsAb:
@@ -196,6 +256,20 @@ enum Scale: String, CaseIterable {
         }
     }
     
+    func sparseAbsoluteNotes(fromTonic tonic: AbsoluteNote) -> [AbsoluteNote?] {
+        var notes: [AbsoluteNote?] = []
+        var note: AbsoluteNote? = tonic
+        for i in 0..<12 {
+            if semitoneIndices.contains(i) {
+                notes.append(note)
+            } else {
+                notes.append(nil)
+            }
+            note = note?.next
+        }
+        return notes
+    }
+    
     func absoluteNotes(fromTonic tonic: AbsoluteNote) -> [AbsoluteNote?] {
         var notes: [AbsoluteNote?] = []
         var note: AbsoluteNote? = tonic
@@ -206,5 +280,35 @@ enum Scale: String, CaseIterable {
             note = note?.next
         }
         return notes
+    }
+}
+
+
+enum KeysPerOctave: String, CaseIterable {
+    case chromaticKeys
+    case diatonicKeys
+    
+    var name: String {
+        switch self {
+        case .chromaticKeys:
+            return "Chromatic (all 12 keys)"
+        case .diatonicKeys:
+            return "Diatonic (only in-scale keys)"
+        }
+    }
+}
+
+
+enum NonDiatonicKeyStyle: String, CaseIterable {
+    case shaded
+    case disabled
+    
+    var name: String {
+        switch self {
+        case .shaded:
+            return "Shaded, but Enabled"
+        case .disabled:
+            return "Shaded and Disabled"
+        }
     }
 }

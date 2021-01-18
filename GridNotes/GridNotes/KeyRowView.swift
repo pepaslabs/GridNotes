@@ -8,19 +8,20 @@
 import UIKit
 
 
-protocol KeyRowDelegate {
+protocol KeyDelegate {
     func keyDidGetPressed(absoluteNote: AbsoluteNote)
     func keyDidGetReleased(absoluteNote: AbsoluteNote)
 }
 
 
-class KeyRowView: UIView {
+enum KeyStyle: String {
+    case normal
+    case shaded
+    case disabled
+}
 
-    enum KeyStyle: String {
-        case normal
-        case shaded
-        case disabled
-    }
+
+class KeyRowView: UIView {
     
     struct Model {
         var styledNotes: [(AbsoluteNote, KeyStyle)?] = []
@@ -32,20 +33,18 @@ class KeyRowView: UIView {
     
     func set(model: Model) {
         self.model = model
-        _reloadViews()
+        _apply(model: model)
     }
     
-    var delegate: KeyRowDelegate? = nil
+    var delegate: KeyDelegate? = nil
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        _reloadViews()
+        _apply(model: model)
     }
     
     // MARK: - Internals
-
-    private static let _shadedGray: UIColor = UIColor(white: 0.85, alpha: 1)
 
     private var _keys: [UIButton] = []
     
@@ -92,27 +91,8 @@ class KeyRowView: UIView {
     private var _hasSetUpConstraints: Bool = false
 
     /// (Re)Construct the views according to the model.
-    private func _reloadViews() {
-        
-        func buttonText(absoluteNote: AbsoluteNote) -> String {
-            let note = absoluteNote.note
-            let octave = absoluteNote.octave
-            switch note {
-            case .A, .B, .C, .D, .E, .F, .G:
-                return "\(note.rawValue)\(octave.rawValue)"
-            case .AsBb:
-                return "A\(octave.rawValue)♯\nB\(octave.rawValue)♭"
-            case .CsDb:
-                return "C\(octave.rawValue)♯\nD\(octave.rawValue)♭"
-            case .DsEb:
-                return "D\(octave.rawValue)♯\nE\(octave.rawValue)♭"
-            case .FsGb:
-                return "F\(octave.rawValue)♯\nG\(octave.rawValue)♭"
-            case .GsAb:
-                return "G\(octave.rawValue)♯\nA\(octave.rawValue)♭"
-            }
-        }
-        
+    private func _apply(model: Model) {
+                
         for subview in subviews {
             subview.removeFromSuperview()
         }
@@ -131,7 +111,7 @@ class KeyRowView: UIView {
             key.tag = i
 
             if let (absoluteNote, keyStyle) = styledNote {
-                let title = buttonText(absoluteNote: absoluteNote)
+                let title = absoluteNote.buttonText
                 key.setTitle(title, for: .normal)
 
                 switch keyStyle {
@@ -140,10 +120,10 @@ class KeyRowView: UIView {
                     key.backgroundColor = UIColor.white
                 case .shaded:
                     key.isEnabled = true
-                    key.backgroundColor = KeyRowView._shadedGray
+                    key.backgroundColor = UIColor.shadedKeyGray
                 case .disabled:
                     key.isEnabled = false
-                    key.backgroundColor = KeyRowView._shadedGray
+                    key.backgroundColor = UIColor.shadedKeyGray
                 }
                 
                 if model.stickyKeys {
@@ -157,7 +137,7 @@ class KeyRowView: UIView {
 
             } else {
                 key.isEnabled = false
-                key.backgroundColor = KeyRowView._shadedGray
+                key.backgroundColor = UIColor.shadedKeyGray
             }
 
             _keys.append(key)
@@ -170,22 +150,20 @@ class KeyRowView: UIView {
     // MARK: - Target/Action
     
     @objc func keyDidGetPressed(key: UIButton) {
-        if let (absoluteNote, _) = model.styledNotes[key.tag] {
-            key.backgroundColor = UIColor.yellow
-            delegate?.keyDidGetPressed(absoluteNote: absoluteNote)
-        }
+        guard let (absoluteNote, _) = model.styledNotes[key.tag] else { return }
+        key.backgroundColor = UIColor.yellow
+        delegate?.keyDidGetPressed(absoluteNote: absoluteNote)
     }
     
     @objc func keyDidGetReleased(key: UIButton) {
-        if let (absoluteNote, keyStyle) = model.styledNotes[key.tag] {
-            switch keyStyle {
-            case .normal:
-                key.backgroundColor = UIColor.white
-            case .shaded, .disabled:
-                key.backgroundColor = KeyRowView._shadedGray
-            }
-            delegate?.keyDidGetReleased(absoluteNote: absoluteNote)
+        guard let (absoluteNote, keyStyle) = model.styledNotes[key.tag] else { return }
+        switch keyStyle {
+        case .normal:
+            key.backgroundColor = UIColor.white
+        case .shaded, .disabled:
+            key.backgroundColor = UIColor.shadedKeyGray
         }
+        delegate?.keyDidGetReleased(absoluteNote: absoluteNote)
     }
     
     @objc func keyDidGetToggled(key: UIButton) {
@@ -196,7 +174,7 @@ class KeyRowView: UIView {
                 case .normal:
                     key.backgroundColor = UIColor.white
                 case .shaded, .disabled:
-                    key.backgroundColor = KeyRowView._shadedGray
+                    key.backgroundColor = UIColor.shadedKeyGray
                 }
                 delegate?.keyDidGetReleased(absoluteNote: absoluteNote)
             } else {

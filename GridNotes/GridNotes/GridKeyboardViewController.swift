@@ -8,82 +8,24 @@
 import UIKit
 
 
-/// The main piano view controller.
-class GridKeyboardViewController: UIViewController {
-
-    enum KeysPerOctave: String, CaseIterable {
-        case chromaticKeys
-        case diatonicKeys
-        
-        var name: String {
-            switch self {
-            case .chromaticKeys:
-                return "Chromatic (all 12 keys)"
-            case .diatonicKeys:
-                return "Diatonic (only in-scale keys)"
-            }
-        }
-    }
+/// The grid-layout piano view controller.
+class GridKeyboardViewController: UIViewController, InterfaceDelegating {
     
-    enum NonDiatonicKeyStyle: String, CaseIterable {
-        case shaded
-        case disabled
-        
-        var name: String {
-            switch self {
-            case .shaded:
-                return "Shaded, but Enabled"
-            case .disabled:
-                return "Shaded and Disabled"
-            }
-        }
-    }
+    private(set) var state: AppState = AppState.defaultState
     
-    struct Model {
-        var tonicNote: Note
-        var scale: Scale
-        var octaves: [Octave]
-        var keysPerOctave: KeysPerOctave
-        var nonScaleStyle: NonDiatonicKeyStyle
-        var stickyKeys: Bool
-        var stuckKeys: Set<AbsoluteNote>
-        
-        static var defaultModel: Model {
-            switch UIDevice.current.userInterfaceIdiom {
-            case .phone:
-                return Model(
-                    tonicNote: .C,
-                    scale: .major,
-                    octaves: Octave.octavesForPhone,
-                    keysPerOctave: .diatonicKeys,
-                    nonScaleStyle: .disabled,
-                    stickyKeys: false,
-                    stuckKeys: []
-                )
-            case .pad:
-                return Model(
-                    tonicNote: .C,
-                    scale: .major,
-                    octaves: Octave.octavesForPad,
-                    keysPerOctave: .chromaticKeys,
-                    nonScaleStyle: .disabled,
-                    stickyKeys: false,
-                    stuckKeys: []
-                )
-            default:
-                fatalError()
-            }
-        }
-    }
-    
-    private(set) var model: Model = Model.defaultModel
-    
-    func set(model: Model) {
-        self.model = model
+    func set(state: AppState) {
+        self.state = state
         if isViewLoaded {
             _reconfigureToolbar()
             _reconfigureKeyRows()
         }
+    }
+    
+    public var interfaceDelegate: InterfaceChanging? = nil
+    
+    init(state: AppState) {
+        self.state = state
+        super.init(nibName: nil, bundle: nil)
     }
     
     // MARK: - Internals
@@ -91,6 +33,10 @@ class GridKeyboardViewController: UIViewController {
     private var _rows: [KeyRowView] = []
     private var _toolbar: UIToolbar!
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -115,7 +61,7 @@ class GridKeyboardViewController: UIViewController {
             _toolbar.bottomAnchor.constraint(equalTo: _rows.first!.topAnchor).isActive = true
 
             // stack the key rows vertically.
-            for i in 0..<(model.octaves.count-1) {
+            for i in 0..<(state.octaves.count-1) {
                 _rows[i].bottomAnchor.constraint(equalTo: _rows[i+1].topAnchor).isActive = true
             }
 
@@ -149,7 +95,7 @@ class GridKeyboardViewController: UIViewController {
             }
         }
         
-        for _ in model.octaves {
+        for _ in state.octaves {
             _rows.append(KeyRowView())
         }
 
@@ -175,14 +121,14 @@ class GridKeyboardViewController: UIViewController {
             action: nil
         )
         titleItem.isEnabled = false
-        titleItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .disabled)
+        titleItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray], for: .disabled)
         items.append(titleItem)
 
         items.append(
             UIBarButtonItem.init(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         )
 
-        if model.stuckKeys.count > 0 {
+        if state.stuckKeys.count > 0 {
             items.append(
                 UIBarButtonItem.init(
                     title: "Clear",
@@ -199,7 +145,7 @@ class GridKeyboardViewController: UIViewController {
 
         items.append(
             UIBarButtonItem.init(
-                title: "\(model.tonicNote.name) \(model.scale.name)",
+                title: "\(state.tonicNote.name) \(state.scale.name)",
                 style: .done,
                 target: self,
                 action: #selector(didPressSettings)
@@ -213,20 +159,19 @@ class GridKeyboardViewController: UIViewController {
     private func _reconfigureKeyRows() {
         
         func reconfigureKeyRow(index: Int, octave: Octave) {
-            let firstNote = AbsoluteNote(note: model.tonicNote, octave: octave)
-            let allNotes = AbsoluteNote.chromaticScale(from: firstNote)
-            let scaleIndices = model.scale.semitoneIndices
-
-            let styledNotes: [(AbsoluteNote, KeyRowView.KeyStyle)?]
-            switch model.keysPerOctave {
+            let tonicNote = AbsoluteNote(note: state.tonicNote, octave: octave)
+            let styledNotes: [(AbsoluteNote, KeyStyle)?]
+            switch state.keysPerOctave {
 
             case .chromaticKeys:
+                let allNotes = AbsoluteNote.chromaticScale(from: tonicNote)
+                let scaleIndices = state.scale.semitoneIndices
                 styledNotes = allNotes.enumerated().map { (index, note) in
                     if let note = note {
                         if scaleIndices.contains(index) {
                             return (note, .normal)
                         } else {
-                            let keyStyle = KeyRowView.KeyStyle(rawValue: model.nonScaleStyle.rawValue)!
+                            let keyStyle = KeyStyle(rawValue: state.nonScaleStyle.rawValue)!
                             return (note, keyStyle)
                         }
                     } else {
@@ -236,21 +181,21 @@ class GridKeyboardViewController: UIViewController {
                 }
 
             case .diatonicKeys:
-                styledNotes = model.scale.absoluteNotes(fromTonic: firstNote).map { note in
+                styledNotes = state.scale.absoluteNotes(fromTonic: tonicNote).map { note in
                     guard let note = note else { return nil }
-                    return (note, KeyRowView.KeyStyle.normal)
+                    return (note, KeyStyle.normal)
                 }
 
             }
 
-            let rowModel = KeyRowView.Model(styledNotes: styledNotes, stickyKeys: model.stickyKeys)
+            let rowModel = KeyRowView.Model(styledNotes: styledNotes, stickyKeys: state.stickyKeys)
             _rows[index].set(model: rowModel)
         }
         
-        self.model.stuckKeys = []
+        self.state.stuckKeys = []
         stopPlayingAllNotes()
 
-        for (i, octave) in model.octaves.reversed().enumerated() {
+        for (i, octave) in state.octaves.reversed().enumerated() {
             reconfigureKeyRow(index: i, octave: octave)
         }
         for row in _rows {
@@ -271,13 +216,18 @@ class GridKeyboardViewController: UIViewController {
     
     /// Action to present the settings screen.
     @objc func didPressSettings() {
-        let settingsVC = SettingsViewController()
-        settingsVC.set(model: model)
+        didPressClear()
+        
+        let settingsVC = SettingsViewController(style: .grouped)
+        settingsVC.set(state: state)
 
-        settingsVC.modelDidChange = { [weak self] model in
+        settingsVC.appStateDidChange = { [weak self] state in
             guard let self = self else { return }
-            self.set(model: model)
+            self.set(state: state)
             self.dismissSettings()
+            if state.interface != .grid {
+                self.interfaceDelegate?.interfaceDidGetSelected(interface: state.interface, state: state)
+            }
         }
 
         settingsVC.navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -295,35 +245,28 @@ class GridKeyboardViewController: UIViewController {
     
     /// Action for the button which clears all of the stuck keys.
     @objc func didPressClear() {
-        for note in model.stuckKeys {
+        for note in state.stuckKeys {
             keyDidGetReleased(absoluteNote: note)
         }
         _reconfigureKeyRows()
     }
 }
 
-extension GridKeyboardViewController: KeyRowDelegate {
+extension GridKeyboardViewController: KeyDelegate {
     
     func keyDidGetPressed(absoluteNote: AbsoluteNote) {
         startPlaying(absoluteNote: absoluteNote)
-        if model.stickyKeys {
-            model.stuckKeys.insert(absoluteNote)
+        if state.stickyKeys {
+            state.stuckKeys.insert(absoluteNote)
         }
         _reconfigureToolbar()
     }
     
     func keyDidGetReleased(absoluteNote: AbsoluteNote) {
         stopPlaying(absoluteNote: absoluteNote)
-        if model.stickyKeys {
-            model.stuckKeys.remove(absoluteNote)
+        if state.stickyKeys {
+            state.stuckKeys.remove(absoluteNote)
         }
         _reconfigureToolbar()
-    }
-}
-
-
-extension Bundle {
-    var marketingVersion: String {
-        return infoDictionary!["CFBundleShortVersionString"] as! String
     }
 }

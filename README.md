@@ -11,6 +11,7 @@ A piano with a grid layout (iOS)
 
 ### 1.1 (unreleased)
 
+- Implement "Ring" keyboard layout.
 - Use AVAudioSession `.mixWithOthers` option, which allows the piano to play over the audio of other apps.
 This allows GridNotes to be used in conjunction with e.g. a metronome app or while listening to a backing track on YouTube.
 - Remove Sine Wave sound font (all of the notes were at the wrong pitch).
