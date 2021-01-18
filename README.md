@@ -8,6 +8,7 @@ Now available (for free) in the iOS AppStore for iPhone and iPad!  https://apps.
 
 ![](./.media/IMG_0047.jpg)
 
+![](./.media/IMG_6082.jpg)
 
 ## Changelog
 
