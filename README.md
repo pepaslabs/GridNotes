@@ -2,6 +2,8 @@
 
 A piano with a grid layout (iOS)
 
+Now available (for free) in the iOS AppStore for iPhone and iPad!  https://apps.apple.com/us/app/gridnotes/id1548202128
+
 ![](./.media/IMG_6060.jpg)
 
 ![](./.media/IMG_0047.jpg)
