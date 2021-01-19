@@ -12,7 +12,11 @@ Now available (for free) in the iOS AppStore for iPhone and iPad!  https://apps.
 
 ## Changelog
 
-### 1.1 (unreleased)
+### 1.2
+
+- Support dark-mode.
+
+### 1.1
 
 - Implement "Ring" keyboard layout.
 - Use AVAudioSession `.mixWithOthers` option, which allows the piano to play over the audio of other apps.

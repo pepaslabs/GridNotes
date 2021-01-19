@@ -103,7 +103,7 @@ class KeyRowView: UIView {
             key.translatesAutoresizingMaskIntoConstraints = false
             addSubview(key)
             key.layer.borderWidth = 1
-            key.layer.borderColor = UIColor(white: 0.15, alpha: 1).cgColor
+            key.layer.borderColor = ColorTheme.separator.cgColor
             key.titleLabel?.adjustsFontSizeToFitWidth = true
             key.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
             key.titleLabel?.lineBreakMode = .byWordWrapping
@@ -117,13 +117,13 @@ class KeyRowView: UIView {
                 switch keyStyle {
                 case .normal:
                     key.isEnabled = true
-                    key.backgroundColor = UIColor.white
+                    key.backgroundColor = ColorTheme.background
                 case .shaded:
                     key.isEnabled = true
-                    key.backgroundColor = UIColor.shadedKeyGray
+                    key.backgroundColor = ColorTheme.shadedKey
                 case .disabled:
                     key.isEnabled = false
-                    key.backgroundColor = UIColor.shadedKeyGray
+                    key.backgroundColor = ColorTheme.shadedKey
                 }
                 
                 if model.stickyKeys {
@@ -137,7 +137,7 @@ class KeyRowView: UIView {
 
             } else {
                 key.isEnabled = false
-                key.backgroundColor = UIColor.shadedKeyGray
+                key.backgroundColor = ColorTheme.shadedKey
             }
 
             _keys.append(key)
@@ -151,7 +151,7 @@ class KeyRowView: UIView {
     
     @objc func keyDidGetPressed(key: UIButton) {
         guard let (absoluteNote, _) = model.styledNotes[key.tag] else { return }
-        key.backgroundColor = UIColor.yellow
+        key.backgroundColor = ColorTheme.activeKey
         delegate?.keyDidGetPressed(absoluteNote: absoluteNote)
     }
     
@@ -159,9 +159,9 @@ class KeyRowView: UIView {
         guard let (absoluteNote, keyStyle) = model.styledNotes[key.tag] else { return }
         switch keyStyle {
         case .normal:
-            key.backgroundColor = UIColor.white
+            key.backgroundColor = ColorTheme.background
         case .shaded, .disabled:
-            key.backgroundColor = UIColor.shadedKeyGray
+            key.backgroundColor = ColorTheme.shadedKey
         }
         delegate?.keyDidGetReleased(absoluteNote: absoluteNote)
     }
@@ -172,14 +172,14 @@ class KeyRowView: UIView {
                 model.stuckKeys.remove(key.tag)
                 switch keyStyle {
                 case .normal:
-                    key.backgroundColor = UIColor.white
+                    key.backgroundColor = ColorTheme.background
                 case .shaded, .disabled:
-                    key.backgroundColor = UIColor.shadedKeyGray
+                    key.backgroundColor = ColorTheme.shadedKey
                 }
                 delegate?.keyDidGetReleased(absoluteNote: absoluteNote)
             } else {
                 model.stuckKeys.insert(key.tag)
-                key.backgroundColor = UIColor.yellow
+                key.backgroundColor = ColorTheme.activeKey
                 delegate?.keyDidGetPressed(absoluteNote: absoluteNote)
             }
         }

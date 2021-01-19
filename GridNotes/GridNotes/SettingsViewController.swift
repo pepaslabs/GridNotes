@@ -34,7 +34,7 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Settings"
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = ColorTheme.background
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
     }
 

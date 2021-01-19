@@ -37,7 +37,7 @@ class RingKeyboardViewController: UIViewController, InterfaceDelegating {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = ColorTheme.background
 
         // configure the ring view.
         _ringView.delegate = self
@@ -50,7 +50,7 @@ class RingKeyboardViewController: UIViewController, InterfaceDelegating {
 
         // configure the app label.
         let appNameLabel: UILabel = UILabel()
-        appNameLabel.textColor = UIColor.darkGray
+        appNameLabel.textColor = ColorTheme.label
         appNameLabel.text = "GridNotes \(Bundle.main.marketingVersion)"
         appNameLabel.font = UIFont.boldSystemFont(ofSize: appNameLabel.font.pointSize)
         appNameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -85,6 +85,11 @@ class RingKeyboardViewController: UIViewController, InterfaceDelegating {
         return true
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        // for some reason, a simple setNeedsDisplay() is not sufficient to fully account for a dark-mode change.
+        didPressClear()
+    }
+    
     private func _apply(state: AppState) {
         _settingsButton.setTitle("\(state.tonicNote.name) \(state.scale.name)", for: .normal)
         _reconfigureClearButton()
@@ -208,7 +213,7 @@ class RingKeyboardView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor.white
+        backgroundColor = ColorTheme.background
         _apply(model: model)
     }
     
@@ -227,7 +232,7 @@ class RingKeyboardView: UIView {
     private var _buttonFontSize: CGFloat {
         return round(min(bounds.width, bounds.height) * 0.03)
     }
-
+    
     private var _buttonCenterlineDiameter: CGFloat {
         let padding: CGFloat = 16
         return min(bounds.width, bounds.height) - (padding * 2) - (_buttonRadius * 2)
@@ -249,7 +254,7 @@ class RingKeyboardView: UIView {
                 .centered(within: rect)
             let path = UIBezierPath(ovalIn: circleRect)
             path.lineWidth = round(_semitoneTickmarkLength * 0.1)
-            UIColor.darkGray.setStroke()
+            ColorTheme.separator.setStroke()
             path.stroke()
         }
 
@@ -274,7 +279,7 @@ class RingKeyboardView: UIView {
                 path.lineWidth = round(_semitoneTickmarkLength * 0.05)
                 path.move(to: tickmarkStart(index: i))
                 path.addLine(to: tickmarkEnd(index: i))
-                UIColor.darkGray.setStroke()
+                ColorTheme.separator.setStroke()
                 path.stroke()
             }
         }
@@ -313,8 +318,8 @@ class RingKeyboardView: UIView {
         for (i, pair) in model.styledNotes.enumerated() {
             let key = UIButton(type: .system)
             key.translatesAutoresizingMaskIntoConstraints = false
-            key.backgroundColor = UIColor.white
-            key.layer.borderColor = UIColor.darkGray.cgColor
+            key.backgroundColor = ColorTheme.background
+            key.layer.borderColor = ColorTheme.separator.cgColor
             key.titleLabel?.adjustsFontSizeToFitWidth = true
             key.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
             key.titleLabel?.lineBreakMode = .byWordWrapping
@@ -329,13 +334,13 @@ class RingKeyboardView: UIView {
                 switch style {
                 case .normal:
                     key.isEnabled = true
-                    key.backgroundColor = UIColor.white
+                    key.backgroundColor = ColorTheme.background
                 case .shaded:
                     key.isEnabled = true
-                    key.backgroundColor = UIColor.shadedKeyGray
+                    key.backgroundColor = ColorTheme.shadedKey
                 case .disabled:
                     key.isEnabled = false
-                    key.backgroundColor = UIColor.shadedKeyGray
+                    key.backgroundColor = ColorTheme.shadedKey
                 }
                 addSubview(key)
                 _keys.append(key)
@@ -351,7 +356,7 @@ class RingKeyboardView: UIView {
 
             case .none:
                 key.isEnabled = false
-                key.backgroundColor = UIColor.shadedKeyGray
+                key.backgroundColor = ColorTheme.shadedKey
             }
         }
         
@@ -362,7 +367,7 @@ class RingKeyboardView: UIView {
     
     @objc func keyDidGetPressed(key: UIButton) {
         guard let (absoluteNote, _) = model.styledNotes[key.tag] else { return }
-        key.backgroundColor = UIColor.yellow
+        key.backgroundColor = ColorTheme.activeKey
         delegate?.keyDidGetPressed(absoluteNote: absoluteNote)
     }
 
@@ -370,9 +375,9 @@ class RingKeyboardView: UIView {
         guard let (absoluteNote, keyStyle) = model.styledNotes[key.tag] else { return }
         switch keyStyle {
         case .normal:
-            key.backgroundColor = UIColor.white
+            key.backgroundColor = ColorTheme.background
         case .shaded, .disabled:
-            key.backgroundColor = UIColor.shadedKeyGray
+            key.backgroundColor = ColorTheme.shadedKey
         }
         delegate?.keyDidGetReleased(absoluteNote: absoluteNote)
     }
@@ -383,14 +388,14 @@ class RingKeyboardView: UIView {
                 model.stuckKeys.remove(absoluteNote)
                 switch keyStyle {
                 case .normal:
-                    key.backgroundColor = UIColor.white
+                    key.backgroundColor = ColorTheme.background
                 case .shaded, .disabled:
-                    key.backgroundColor = UIColor.shadedKeyGray
+                    key.backgroundColor = ColorTheme.shadedKey
                 }
                 delegate?.keyDidGetReleased(absoluteNote: absoluteNote)
             } else {
                 model.stuckKeys.insert(absoluteNote)
-                key.backgroundColor = UIColor.yellow
+                key.backgroundColor = ColorTheme.activeKey
                 delegate?.keyDidGetPressed(absoluteNote: absoluteNote)
             }
         }

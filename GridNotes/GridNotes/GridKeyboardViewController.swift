@@ -99,7 +99,7 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
             _rows.append(KeyRowView())
         }
 
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = ColorTheme.background
 
         // Using UIToolbar.init() results in constraint conflicts, so instead we init with a frame.
         _toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 44))
@@ -109,9 +109,14 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
         _reconfigureKeyRows()
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        // for some reason, a simple setNeedsDisplay() is not sufficient to fully account for a dark-mode change.
+        didPressClear()
+    }
+
     /// (Re)Populate the toolbar with labels and buttons according to our model.
     private func _reconfigureToolbar() {
-        _toolbar.barTintColor = UIColor.white
+        _toolbar.barTintColor = ColorTheme.background
         var items = [UIBarButtonItem]()
 
         let titleItem = UIBarButtonItem.init(
@@ -121,7 +126,7 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
             action: nil
         )
         titleItem.isEnabled = false
-        titleItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray], for: .disabled)
+        titleItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorTheme.label], for: .disabled)
         items.append(titleItem)
 
         items.append(
