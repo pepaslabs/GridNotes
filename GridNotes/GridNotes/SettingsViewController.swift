@@ -8,6 +8,7 @@
 import UIKit
 
 
+/// The settings modal.
 class SettingsViewController: UITableViewController {
 
     private(set) var state: AppState = AppState.defaultState
@@ -23,14 +24,16 @@ class SettingsViewController: UITableViewController {
     
     // MARK: - Internals
     
-    private let _tonicSection: Int = 0
-    private let _scaleSection: Int = 1
-    private let _nonDiatonicSection: Int = 2
-    private let _octaveKeysSection: Int = 3
-    private let _stickySection: Int = 4
-    private let _instrumentSection: Int = 5
-    private let _interfaceSection: Int = 6
-
+    enum Section: Int, CaseIterable {
+        case tonic = 0
+        case scale = 1
+        case nonDiatonic = 2
+        case octaveKeys = 3
+        case sticky = 4
+        case instrument = 5
+        case interface = 6
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Settings"
@@ -41,84 +44,76 @@ class SettingsViewController: UITableViewController {
     // MARK: - UITableViewDelegate / UITableViewDataSource
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 7
+        return Section.allCases.count
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case _tonicSection:
+        guard let sectionCase = Section(rawValue: section) else { fatalError() }
+        switch sectionCase {
+        case .tonic:
             return "Tonic Note"
-        case _scaleSection:
+        case .scale:
             return "Scale"
-        case _nonDiatonicSection:
+        case .nonDiatonic:
             return "Non-Diatonic (Out-of-Scale) Note Treatment"
-        case _octaveKeysSection:
+        case .octaveKeys:
             return "Keys per Octave"
-        case _stickySection:
+        case .sticky:
             return "Sticky Keys"
-        case _instrumentSection:
+        case .instrument:
             return "Instrument (Fluid R3 SoundFont)"
-        case _interfaceSection:
+        case .interface:
             return "Interface"
-        default:
-            fatalError()
         }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case _tonicSection:
+        guard let sectionCase = Section(rawValue: section) else { fatalError() }
+        switch sectionCase {
+        case .tonic:
             return Note.allCases.count
-        case _scaleSection:
+        case .scale:
             return Scale.allCases.count
-        case _nonDiatonicSection:
+        case .nonDiatonic:
             return NonDiatonicKeyStyle.allCases.count
-        case _octaveKeysSection:
+        case .octaveKeys:
             return KeysPerOctave.allCases.count
-        case _stickySection:
+        case .sticky:
             return 2
-        case _instrumentSection:
+        case .instrument:
             return Instrument.allCases.count
-        case _interfaceSection:
+        case .interface:
             return Interface.allCases.count
-        default:
-            fatalError()
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        precondition(Section(rawValue: indexPath.section) != nil)
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        switch indexPath.section {
-        case _tonicSection, _scaleSection, _nonDiatonicSection, _octaveKeysSection, _stickySection,
-             _instrumentSection, _interfaceSection:
-            _style(cell: cell, indexPath: indexPath)
-        default:
-            fatalError()
-        }
+        _style(cell: cell, indexPath: indexPath)
         cell.separatorInset = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 0)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case _tonicSection:
+        guard let sectionCase = Section(rawValue: indexPath.section) else { fatalError() }
+        switch sectionCase {
+        case .tonic:
             state.tonicNote = Note.allCases[indexPath.row]
-        case _scaleSection:
+        case .scale:
             state.scale = Scale.allCases[indexPath.row]
-        case _nonDiatonicSection:
+        case .nonDiatonic:
             state.nonScaleStyle = NonDiatonicKeyStyle.allCases[indexPath.row]
-        case _octaveKeysSection:
+        case .octaveKeys:
             state.keysPerOctave = KeysPerOctave.allCases[indexPath.row]
-        case _stickySection:
+        case .sticky:
             state.stickyKeys = (indexPath.row == 0)
-        case _instrumentSection:
+        case .instrument:
             deinitAudio()
             g_instrument = Instrument.allCases[indexPath.row]
             initAudio()
-        case _interfaceSection:
+        case .interface:
             state.interface = Interface.allCases[indexPath.row]
-        default:
-            fatalError()
         }
 
         _restyleVisibleCells()
@@ -129,44 +124,42 @@ class SettingsViewController: UITableViewController {
     }
     
     private func _style(cell: UITableViewCell, indexPath: IndexPath) {
+        guard let sectionCase = Section(rawValue: indexPath.section) else { fatalError() }
         let isSelected: Bool
-        switch indexPath.section {
+        switch sectionCase {
 
-        case _tonicSection:
+        case .tonic:
             let note = Note.allCases[indexPath.row]
             isSelected = state.tonicNote == note
-            cell.textLabel?.text = note.name
+            cell.textLabel?.text = note.displayName
 
-        case _scaleSection:
+        case .scale:
             let scale = Scale.allCases[indexPath.row]
             isSelected = state.scale == scale
-            cell.textLabel?.text = scale.name
+            cell.textLabel?.text = scale.displayName
 
-        case _nonDiatonicSection:
+        case .nonDiatonic:
             let style = NonDiatonicKeyStyle.allCases[indexPath.row]
             isSelected = state.nonScaleStyle == style
-            cell.textLabel?.text = style.name
+            cell.textLabel?.text = style.displayName
 
-        case _octaveKeysSection:
+        case .octaveKeys:
             let keyCount = KeysPerOctave.allCases[indexPath.row]
             isSelected = state.keysPerOctave == keyCount
-            cell.textLabel?.text = keyCount.name
+            cell.textLabel?.text = keyCount.displayName
             
-        case _stickySection:
+        case .sticky:
             isSelected = (state.stickyKeys && indexPath.row == 0) || (!state.stickyKeys && indexPath.row == 1)
             cell.textLabel?.text = (indexPath.row == 0) ? "Enabled" : "Disabled"
             
-        case _instrumentSection:
+        case .instrument:
             isSelected = g_instrument == Instrument.allCases[indexPath.row]
             cell.textLabel?.text = Instrument.allCases[indexPath.row].displayName
         
-        case _interfaceSection:
+        case .interface:
             let interface = Interface.allCases[indexPath.row]
             isSelected = state.interface == interface
-            cell.textLabel?.text = interface.name
-            
-        default:
-            fatalError()
+            cell.textLabel?.text = interface.displayName
         }
 
         if isSelected {
@@ -180,14 +173,9 @@ class SettingsViewController: UITableViewController {
 
     private func _restyleVisibleCells() {
         for indexPath in tableView.indexPathsForVisibleRows ?? [] {
+            precondition(Section(rawValue: indexPath.section) != nil)
             guard let cell = tableView.cellForRow(at: indexPath) else { continue }
-            switch indexPath.section {
-            case _tonicSection, _scaleSection, _nonDiatonicSection, _octaveKeysSection, _stickySection,
-                 _instrumentSection, _interfaceSection:
-                _style(cell: cell, indexPath: indexPath)
-            default:
-                fatalError()
-            }
+            _style(cell: cell, indexPath: indexPath)
         }
     }
     

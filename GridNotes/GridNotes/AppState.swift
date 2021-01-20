@@ -8,6 +8,7 @@
 import UIKit
 
 
+/// The core data structure of the app.
 struct AppState {
     var interface: Interface = .grid
     var tonicNote: Note = .C
@@ -37,20 +38,19 @@ struct AppState {
 }
 
 
+/// Which piano layout to use.
 enum Interface: String, CaseIterable {
-    case grid
-    case ring
+    case grid = "Grid"
+    case ring = "Ring"
     
-    var name: String {
-        switch self {
-        case .grid: return "Grid"
-        case .ring: return "Ring"
-        }
+    var displayName: String {
+        return rawValue
     }
 }
 
 
-enum Note: String, CaseIterable, Hashable {
+/// A 12TET musical pitch.
+enum Note: String, CaseIterable {
     case A = "A"
     case AsBb = "A♯/B♭"
     case B = "B"
@@ -64,6 +64,10 @@ enum Note: String, CaseIterable, Hashable {
     case G = "G"
     case GsAb = "G♯/A♭"
 
+    var displayName: String {
+        return rawValue
+    }
+
     var index: Int {
         return Note.allCases.firstIndex(of: self)!
     }
@@ -74,21 +78,21 @@ enum Note: String, CaseIterable, Hashable {
         return Note.allCases[nextIndex]
     }
     
+    /// False for sharps and flats.
     var isNaturalNote: Bool {
         switch self {
-        case .A, .B, .C, .D, .E, .F, .G: return true
-        default: return false
+        case .A, .B, .C, .D, .E, .F, .G:
+            return true
+        default:
+            return false
         }
     }
 
-    var name: String {
-        return rawValue
-    }
-
     static var noteNames: [String] {
-        return Note.allCases.map { $0.rawValue }
+        return Note.allCases.map { $0.displayName }
     }
     
+    /// All 12 notes in an octave.
     static func chromaticScale(from startingNote: Note) -> [Note] {
         var note: Note = startingNote
         var notes: [Note] = []
@@ -101,7 +105,7 @@ enum Note: String, CaseIterable, Hashable {
 }
 
 
-enum Octave: Int, Hashable {
+enum Octave: Int {
     case zero = 0
     case one
     case two
@@ -122,20 +126,23 @@ enum Octave: Int, Hashable {
     }
     
     static var octavesForPhone: [Octave] {
+        // On iPhone, we only have room for 5 octaves.
         return [.two, .three, .four, .five, .six]
     }
     
     static var octavesForPad: [Octave] {
+        // On iPhone, we have room for 7 octaves.
         return [.one, .two, .three, .four, .five, .six, .seven]
     }
 }
 
 
+/// A note and an octave, e.g. "C4".
 struct AbsoluteNote: Hashable {
     var note: Note
     var octave: Octave
     
-    var name: String {
+    var displayName: String {
         switch note {
         case .A, .B, .C, .D, .E, .F, .G:
             return "\(note.rawValue)\(octave.rawValue)"
@@ -152,6 +159,7 @@ struct AbsoluteNote: Hashable {
         }
     }
     
+    /// The display name, but wrapped into two lines of text.
     var buttonText: String {
         switch note {
         case .A, .B, .C, .D, .E, .F, .G:
@@ -168,7 +176,6 @@ struct AbsoluteNote: Hashable {
             return "G\(octave.rawValue)♯\nA\(octave.rawValue)♭"
         }
     }
-
     
     var next: AbsoluteNote? {
         switch note {
@@ -184,6 +191,7 @@ struct AbsoluteNote: Hashable {
         }
     }
     
+    /// All 12 notes in an octave.
     static func chromaticScale(from startingNote: AbsoluteNote) -> [AbsoluteNote?] {
         var note: AbsoluteNote? = startingNote
         var notes: [AbsoluteNote?] = []
@@ -194,6 +202,7 @@ struct AbsoluteNote: Hashable {
         return notes
     }
     
+    /// The MIDI numerical index of this note.
     var midiPitch: UInt32 {
         return UInt32((note.index-3) + (octave.rawValue+1) * 12)
     }
@@ -217,7 +226,7 @@ enum Scale: String, CaseIterable {
     case majorPent = "Major Pentatonic"
     case minorPent = "Minor Pentatonic"
 
-    var name: String {
+    var displayName: String {
         return rawValue
     }
     
@@ -256,6 +265,20 @@ enum Scale: String, CaseIterable {
         }
     }
     
+    /// The (7) in-scale notes.
+    func absoluteNotes(fromTonic tonic: AbsoluteNote) -> [AbsoluteNote?] {
+        var notes: [AbsoluteNote?] = []
+        var note: AbsoluteNote? = tonic
+        for i in 0..<12 {
+            if semitoneIndices.contains(i) {
+                notes.append(note)
+            }
+            note = note?.next
+        }
+        return notes
+    }
+
+    /// The (7) notes of this scale, but with nils inserted for the non-scale notes (12 values total).
     func sparseAbsoluteNotes(fromTonic tonic: AbsoluteNote) -> [AbsoluteNote?] {
         var notes: [AbsoluteNote?] = []
         var note: AbsoluteNote? = tonic
@@ -269,18 +292,6 @@ enum Scale: String, CaseIterable {
         }
         return notes
     }
-    
-    func absoluteNotes(fromTonic tonic: AbsoluteNote) -> [AbsoluteNote?] {
-        var notes: [AbsoluteNote?] = []
-        var note: AbsoluteNote? = tonic
-        for i in 0..<12 {
-            if semitoneIndices.contains(i) {
-                notes.append(note)
-            }
-            note = note?.next
-        }
-        return notes
-    }
 }
 
 
@@ -288,7 +299,7 @@ enum KeysPerOctave: String, CaseIterable {
     case chromaticKeys
     case diatonicKeys
     
-    var name: String {
+    var displayName: String {
         switch self {
         case .chromaticKeys:
             return "Chromatic (all 12 keys)"
@@ -299,11 +310,12 @@ enum KeysPerOctave: String, CaseIterable {
 }
 
 
+/// Treatment styles for the out-of-scale notes.
 enum NonDiatonicKeyStyle: String, CaseIterable {
     case shaded
     case disabled
     
-    var name: String {
+    var displayName: String {
         switch self {
         case .shaded:
             return "Shaded, but Enabled"

@@ -59,7 +59,8 @@ enum Instrument: String, CaseIterable {
 }
 
 
-// Globals (don't @ me).
+// Globals.
+// TODO: consider integrating these into AppState.
 var g_instrument: Instrument = .rhodesEP
 var g_graph: AUGraph?
 var g_synthNode: AUNode = AUNode()
@@ -117,7 +118,7 @@ func initAudio() {
     ret = AUGraphStart(g_graph!)
     precondition(ret == noErr)
     
-    // load a sound font.
+    // Load a sound font.
     var soundFont: URL = Bundle.main.url(forResource: g_instrument.filename, withExtension: "sf2")!
     ret = AudioUnitSetProperty(
         g_synthUnit!,
@@ -129,7 +130,7 @@ func initAudio() {
     )
     precondition(ret == noErr)
 
-    // load a patch.
+    // Load a patch.
     let channel: UInt32 = 0
     var disabled: UInt32 = 0
     var enabled: UInt32 = 1

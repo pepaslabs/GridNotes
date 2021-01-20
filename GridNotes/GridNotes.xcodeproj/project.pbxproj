@@ -36,7 +36,8 @@
 		2B6D2BA225B51140003AE01F /* CGRect+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BA125B51140003AE01F /* CGRect+.swift */; };
 		2B6D2BAC25B511B6003AE01F /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BAB25B511B6003AE01F /* Bundle+.swift */; };
 		2B6D2BB425B51BF2003AE01F /* KeyboardContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BB325B51BF2003AE01F /* KeyboardContainerController.swift */; };
-		2B6D2BC725B67161003AE01F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BC625B67161003AE01F /* Theme.swift */; };
+		2B6D2BC725B67161003AE01F /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BC625B67161003AE01F /* ColorTheme.swift */; };
+		2B6D2BD525B79CBC003AE01F /* RingKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BD425B79CBC003AE01F /* RingKeyboardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,7 +93,8 @@
 		2B6D2BA125B51140003AE01F /* CGRect+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+.swift"; sourceTree = "<group>"; };
 		2B6D2BAB25B511B6003AE01F /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
 		2B6D2BB325B51BF2003AE01F /* KeyboardContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardContainerController.swift; sourceTree = "<group>"; };
-		2B6D2BC625B67161003AE01F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		2B6D2BC625B67161003AE01F /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
+		2B6D2BD425B79CBC003AE01F /* RingKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingKeyboardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,15 +145,16 @@
 		2B4553D025AB706500A95718 /* GridNotes */ = {
 			isa = PBXGroup;
 			children = (
-				2B45541225AB722300A95718 /* Midi.swift */,
-				2B6D2BC625B67161003AE01F /* Theme.swift */,
 				2B45544825ACC62E00A95718 /* AppState.swift */,
+				2B4553D125AB706500A95718 /* AppDelegate.swift */,
+				2B6D2BB325B51BF2003AE01F /* KeyboardContainerController.swift */,
 				2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */,
 				2B45544325ABDEA800A95718 /* KeyRowView.swift */,
 				2B6D2B9C25B510FC003AE01F /* RingKeyboardViewController.swift */,
+				2B6D2BD425B79CBC003AE01F /* RingKeyboardView.swift */,
 				2B45543E25AB8D6C00A95718 /* SettingsViewController.swift */,
-				2B4553D125AB706500A95718 /* AppDelegate.swift */,
-				2B6D2BB325B51BF2003AE01F /* KeyboardContainerController.swift */,
+				2B45541225AB722300A95718 /* Midi.swift */,
+				2B6D2BC625B67161003AE01F /* ColorTheme.swift */,
 				2B6D2BA125B51140003AE01F /* CGRect+.swift */,
 				2B6D2BAB25B511B6003AE01F /* Bundle+.swift */,
 				2B4553DA25AB706700A95718 /* Assets.xcassets */,
@@ -351,11 +354,12 @@
 				2B45541325AB722300A95718 /* Midi.swift in Sources */,
 				2B6D2BA225B51140003AE01F /* CGRect+.swift in Sources */,
 				2B4553D225AB706500A95718 /* AppDelegate.swift in Sources */,
+				2B6D2BD525B79CBC003AE01F /* RingKeyboardView.swift in Sources */,
 				2B45544425ABDEA800A95718 /* KeyRowView.swift in Sources */,
 				2B6D2BB425B51BF2003AE01F /* KeyboardContainerController.swift in Sources */,
 				2B45543F25AB8D6C00A95718 /* SettingsViewController.swift in Sources */,
 				2B45544925ACC62E00A95718 /* AppState.swift in Sources */,
-				2B6D2BC725B67161003AE01F /* Theme.swift in Sources */,
+				2B6D2BC725B67161003AE01F /* ColorTheme.swift in Sources */,
 				2B6D2BAC25B511B6003AE01F /* Bundle+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

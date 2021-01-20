@@ -16,8 +16,7 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
     func set(state: AppState) {
         self.state = state
         if isViewLoaded {
-            _reconfigureToolbar()
-            _reconfigureKeyRows()
+            _apply(state: state)
         }
     }
     
@@ -30,13 +29,17 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
     
     // MARK: - Internals
     
-    private var _rows: [KeyRowView] = []
+    /// The rows of piano keys.
+    private var _keyRows: [KeyRowView] = []
+
+    /// The toolbar for the app label, clear button, and settings button.
     private var _toolbar: UIToolbar!
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // The view consists of a toolbar of buttons and several rows of keys.
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,50 +47,53 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
             _toolbar.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(_toolbar)
 
-            for row in _rows {
+            for row in _keyRows {
                 row.translatesAutoresizingMaskIntoConstraints = false
                 view.addSubview(row)
             }
 
-            // toolbar height.
+            // Toolbar height.
             _toolbar.heightAnchor.constraint(equalToConstant: 44).isActive = true
 
-            // pin the toolbar to the top and sides.
+            // Pin the toolbar to the top and sides.
             view.topAnchor.constraint(equalTo: _toolbar.topAnchor).isActive = true
             view.leadingAnchor.constraint(equalTo: _toolbar.leadingAnchor).isActive = true
             view.trailingAnchor.constraint(equalTo: _toolbar.trailingAnchor).isActive = true
 
-            // pin the toolbar bottom the the first row of keys.
-            _toolbar.bottomAnchor.constraint(equalTo: _rows.first!.topAnchor).isActive = true
+            // Pin the toolbar bottom the the first row of keys.
+            _toolbar.bottomAnchor.constraint(equalTo: _keyRows.first!.topAnchor).isActive = true
 
-            // stack the key rows vertically.
+            // Stack the key rows vertically.
             for i in 0..<(state.octaves.count-1) {
-                _rows[i].bottomAnchor.constraint(equalTo: _rows[i+1].topAnchor).isActive = true
+                _keyRows[i].bottomAnchor.constraint(equalTo: _keyRows[i+1].topAnchor).isActive = true
             }
 
-            // set the key rows to have equal heights.
-            for row in _rows.dropFirst() {
-                row.heightAnchor.constraint(equalTo: _rows.first!.heightAnchor).isActive = true
+            // Set the key rows to have equal heights.
+            for row in _keyRows.dropFirst() {
+                row.heightAnchor.constraint(equalTo: _keyRows.first!.heightAnchor).isActive = true
             }
 
-            let guide = view.layoutMarginsGuide
-
+            // The OS-level swipe gesture recognizers will steal some of our touches which are near the edge of the
+            // screen (despite preferredScreenEdgesDeferringSystemGestures).  On iPhone, the screen real estate is
+            // more important than losing a few touches.  On iPad, we can affort to use a bit of screen-edge margin
+            // to avoid the lost touches.
             switch UIDevice.current.userInterfaceIdiom {
             case .phone:
-                // on iPhone, pin the key rows all the way to the edges of the screen.
-                for row in _rows {
+                // On iPhone, pin the key rows all the way to the edges of the screen.
+                for row in _keyRows {
                     view.leadingAnchor.constraint(equalTo: row.leadingAnchor).isActive = true
                     view.trailingAnchor.constraint(equalTo: row.trailingAnchor).isActive = true
                 }
-                view.bottomAnchor.constraint(equalTo: _rows.last!.bottomAnchor).isActive = true
+                view.bottomAnchor.constraint(equalTo: _keyRows.last!.bottomAnchor).isActive = true
             case .pad:
-                // on iPad, pin the key rows to the layout margin guide.
-                for row in _rows {
+                // On iPad, pin the key rows to the layout margin guide.
+                let guide = view.layoutMarginsGuide
+                for row in _keyRows {
                     guide.leadingAnchor.constraint(equalTo: row.leadingAnchor).isActive = true
                     guide.trailingAnchor.constraint(equalTo: row.trailingAnchor).isActive = true
                 }
                 guide.bottomAnchor.constraint(
-                    equalToSystemSpacingBelow: _rows.last!.bottomAnchor,
+                    equalToSystemSpacingBelow: _keyRows.last!.bottomAnchor,
                     multiplier: 2)
                 .isActive = true
             default:
@@ -96,29 +102,34 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
         }
         
         for _ in state.octaves {
-            _rows.append(KeyRowView())
+            _keyRows.append(KeyRowView())
         }
 
         view.backgroundColor = ColorTheme.background
 
-        // Using UIToolbar.init() results in constraint conflicts, so instead we init with a frame.
+        // UIToolbar.init() uses a zero frame and results in constraint conflicts, so instead we use init(frame).
         _toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 44))
-
+        _apply(state: state)
         assembleViewHierarchy()
-        _reconfigureToolbar()
-        _reconfigureKeyRows()
     }
-
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        // for some reason, a simple setNeedsDisplay() is not sufficient to fully account for a dark-mode change.
+        // For some reason, a simple setNeedsDisplay() is not sufficient to fully account for a dark-mode change.
         didPressClear()
     }
 
+    /// (Re)Configure the UI to reflect the application state.
+    private func _apply(state: AppState) {
+        _reconfigureToolbar(state: state)
+        _reconfigureKeyRows(state: state)
+    }
+
     /// (Re)Populate the toolbar with labels and buttons according to our model.
-    private func _reconfigureToolbar() {
+    private func _reconfigureToolbar(state: AppState) {
         _toolbar.barTintColor = ColorTheme.background
         var items = [UIBarButtonItem]()
 
+        // The app name label.
         let titleItem = UIBarButtonItem.init(
             title: "GridNotes \(Bundle.main.marketingVersion)",
             style: .done,
@@ -134,6 +145,7 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
         )
 
         if state.stuckKeys.count > 0 {
+            // The clear button.
             items.append(
                 UIBarButtonItem.init(
                     title: "Clear",
@@ -148,9 +160,10 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
             )
         }
 
+        // The settings button.
         items.append(
             UIBarButtonItem.init(
-                title: "\(state.tonicNote.name) \(state.scale.name)",
+                title: "\(state.tonicNote.displayName) \(state.scale.displayName)",
                 style: .done,
                 target: self,
                 action: #selector(didPressSettings)
@@ -161,13 +174,14 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
     }
 
     /// (Re)Configure the key rows according to our model.
-    private func _reconfigureKeyRows() {
+    private func _reconfigureKeyRows(state: AppState) {
         
         func reconfigureKeyRow(index: Int, octave: Octave) {
             let tonicNote = AbsoluteNote(note: state.tonicNote, octave: octave)
             let styledNotes: [(AbsoluteNote, KeyStyle)?]
             switch state.keysPerOctave {
 
+            // 12 keys.
             case .chromaticKeys:
                 let allNotes = AbsoluteNote.chromaticScale(from: tonicNote)
                 let scaleIndices = state.scale.semitoneIndices
@@ -185,6 +199,7 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
 
                 }
 
+            // 7 keys.
             case .diatonicKeys:
                 styledNotes = state.scale.absoluteNotes(fromTonic: tonicNote).map { note in
                     guard let note = note else { return nil }
@@ -194,17 +209,18 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
             }
 
             let rowModel = KeyRowView.Model(styledNotes: styledNotes, stickyKeys: state.stickyKeys)
-            _rows[index].set(model: rowModel)
+            _keyRows[index].set(model: rowModel)
         }
         
+        // Unstick any stuck notes, but without calling the delegate.
         self.state.stuckKeys = []
         stopPlayingAllNotes()
 
         for (i, octave) in state.octaves.reversed().enumerated() {
             reconfigureKeyRow(index: i, octave: octave)
         }
-        for row in _rows {
-            row.delegate = self
+        for row in _keyRows {
+            row.keyDelegate = self
         }
     }
     
@@ -219,7 +235,7 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
 
     // MARK: - Target/Action
     
-    /// Action to present the settings screen.
+    /// Action which shows the settings modal.
     @objc func didPressSettings() {
         didPressClear()
         
@@ -253,7 +269,7 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
         for note in state.stuckKeys {
             keyDidGetReleased(absoluteNote: note)
         }
-        _reconfigureKeyRows()
+        _reconfigureKeyRows(state: state)
     }
 }
 
@@ -264,7 +280,7 @@ extension GridKeyboardViewController: KeyDelegate {
         if state.stickyKeys {
             state.stuckKeys.insert(absoluteNote)
         }
-        _reconfigureToolbar()
+        _reconfigureToolbar(state: state)
     }
     
     func keyDidGetReleased(absoluteNote: AbsoluteNote) {
@@ -272,6 +288,6 @@ extension GridKeyboardViewController: KeyDelegate {
         if state.stickyKeys {
             state.stuckKeys.remove(absoluteNote)
         }
-        _reconfigureToolbar()
+        _reconfigureToolbar(state: state)
     }
 }
