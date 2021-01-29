@@ -1,15 +1,15 @@
 //
-//  GridKeyboardViewController.swift
+//  GridChordsKeyboardViewController.swift
 //  GridNotes
 //
-//  Created by Jason Pepas on 1/10/21.
+//  Created by Jason Pepas on 1/19/21.
 //
 
 import UIKit
 
 
 /// The grid-layout piano view controller.
-class GridKeyboardViewController: UIViewController, InterfaceDelegating {
+class GridChordsKeyboardViewController: UIViewController, InterfaceDelegating {
     
     private(set) var state: AppState = AppState.defaultState
     
@@ -131,7 +131,7 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
 
         // The app name label.
         let titleItem = UIBarButtonItem.init(
-            title: "GridNotes \(Bundle.main.marketingVersion)",
+            title: "GridChords \(Bundle.main.marketingVersion)",
             style: .done,
             target: nil,
             action: nil
@@ -208,7 +208,7 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
 
             }
 
-            let rowModel = KeyRowView.Model(styledNotes: styledNotes, stickyKeys: state.stickyKeys)
+            let rowModel = KeyRowView.Model(styledNotes: styledNotes, stickyKeys: state.stickyMode)
             _keyRows[index].set(model: rowModel)
         }
         
@@ -246,7 +246,7 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
             guard let self = self else { return }
             self.set(state: state)
             self.dismissSettings()
-            if state.interface != .grid {
+            if state.interface != .gridNotes {
                 self.interfaceDelegate?.interfaceDidGetSelected(interface: state.interface, state: state)
             }
         }
@@ -273,11 +273,11 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
     }
 }
 
-extension GridKeyboardViewController: KeyDelegate {
+extension GridChordsKeyboardViewController: KeyDelegate {
     
     func keyDidGetPressed(absoluteNote: AbsoluteNote) {
         startPlaying(absoluteNote: absoluteNote)
-        if state.stickyKeys {
+        if state.stickyMode {
             state.stuckKeys.insert(absoluteNote)
         }
         _reconfigureToolbar(state: state)
@@ -285,9 +285,10 @@ extension GridKeyboardViewController: KeyDelegate {
     
     func keyDidGetReleased(absoluteNote: AbsoluteNote) {
         stopPlaying(absoluteNote: absoluteNote)
-        if state.stickyKeys {
+        if state.stickyMode {
             state.stuckKeys.remove(absoluteNote)
         }
         _reconfigureToolbar(state: state)
     }
 }
+

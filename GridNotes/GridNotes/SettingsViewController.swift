@@ -107,7 +107,7 @@ class SettingsViewController: UITableViewController {
         case .octaveKeys:
             state.keysPerOctave = KeysPerOctave.allCases[indexPath.row]
         case .sticky:
-            state.stickyKeys = (indexPath.row == 0)
+            state.stickyMode = (indexPath.row == 0)
         case .instrument:
             deinitAudio()
             g_instrument = Instrument.allCases[indexPath.row]
@@ -149,7 +149,7 @@ class SettingsViewController: UITableViewController {
             cell.textLabel?.text = keyCount.displayName
             
         case .sticky:
-            isSelected = (state.stickyKeys && indexPath.row == 0) || (!state.stickyKeys && indexPath.row == 1)
+            isSelected = (state.stickyMode && indexPath.row == 0) || (!state.stickyMode && indexPath.row == 1)
             cell.textLabel?.text = (indexPath.row == 0) ? "Enabled" : "Disabled"
             
         case .instrument:

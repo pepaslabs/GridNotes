@@ -129,14 +129,14 @@ class RingKeyboardViewController: UIViewController, InterfaceDelegating {
 
         let model: RingKeyboardView.Model = RingKeyboardView.Model(
             styledNotes: styledNotes,
-            stickyKeys: state.stickyKeys,
+            stickyKeys: state.stickyMode,
             stuckKeys: state.stuckKeys
         )
         _ringView.set(model: model)
     }
 
     private func _hideOrShowClearButton() {
-        let shouldShowClearButton = state.stickyKeys && state.stuckKeys.count > 0
+        let shouldShowClearButton = state.stickyMode && state.stuckKeys.count > 0
         _clearButton.isHidden = !shouldShowClearButton
     }
 
@@ -153,7 +153,7 @@ class RingKeyboardViewController: UIViewController, InterfaceDelegating {
             guard let self = self else { return }
             self.set(state: state)
             self.dismissSettings()
-            if state.interface != .ring {
+            if state.interface != .ringNotes {
                 self.interfaceDelegate?.interfaceDidGetSelected(interface: state.interface, state: state)
             }
         }
@@ -184,7 +184,7 @@ extension RingKeyboardViewController: KeyDelegate {
     
     func keyDidGetPressed(absoluteNote: AbsoluteNote) {
         startPlaying(absoluteNote: absoluteNote)
-        if state.stickyKeys {
+        if state.stickyMode {
             state.stuckKeys.insert(absoluteNote)
         }
         _hideOrShowClearButton()
@@ -192,7 +192,7 @@ extension RingKeyboardViewController: KeyDelegate {
     
     func keyDidGetReleased(absoluteNote: AbsoluteNote) {
         stopPlaying(absoluteNote: absoluteNote)
-        if state.stickyKeys {
+        if state.stickyMode {
             state.stuckKeys.remove(absoluteNote)
         }
         _hideOrShowClearButton()

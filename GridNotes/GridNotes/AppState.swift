@@ -10,14 +10,26 @@ import UIKit
 
 /// The core data structure of the app.
 struct AppState {
-    var interface: Interface = .grid
+    var interface: Interface = .gridNotes
     var tonicNote: Note = .C
     var scale: Scale = .major
     var octaves: [Octave]
     var keysPerOctave: KeysPerOctave
     var nonScaleStyle: NonDiatonicKeyStyle = .disabled
-    var stickyKeys: Bool = false
+    var stickyMode: Bool = false
     var stuckKeys: Set<AbsoluteNote> = []
+    var chordMode: Bool = false
+
+    var explicitlyPlayedNotes: Set<AbsoluteNote> = []
+//    var implicitlyPlayedNotes: Set<AbsoluteNote> = []
+
+//    func implicitlyPlayedNotes(forChordRoots roots: Set<AbsoluteNote>) -> Set<AbsoluteNote> {
+//        var notes = Set<AbsoluteNote>()
+//        for root in roots {
+//            notes.insert(root)
+//        }
+//        return notes
+//    }
     
     static var defaultState: AppState {
         switch UIDevice.current.userInterfaceIdiom {
@@ -40,9 +52,10 @@ struct AppState {
 
 /// Which piano layout to use.
 enum Interface: String, CaseIterable {
-    case grid = "Grid"
-    case ring = "Ring"
-    
+    case gridNotes = "Grid (Notes)"
+    case ringNotes = "Ring (Notes)"
+    case gridChords = "Grid (Chords)"
+
     var displayName: String {
         return rawValue
     }
@@ -177,6 +190,7 @@ struct AbsoluteNote: Hashable {
         }
     }
     
+    /// The next chromatic note.  May be nil if it runs past the eight octave.
     var next: AbsoluteNote? {
         switch note {
         case .GsAb:
@@ -265,20 +279,23 @@ enum Scale: String, CaseIterable {
         }
     }
     
-    /// The (7) in-scale notes.
-    func absoluteNotes(fromTonic tonic: AbsoluteNote) -> [AbsoluteNote?] {
+    /// The (7) in-scale notes.  May include nils at the end if the sequence runs past the eight octave.
+    func absoluteNotes(fromTonic tonic: AbsoluteNote, octaveCount: Int = 1) -> [AbsoluteNote?] {
         var notes: [AbsoluteNote?] = []
         var note: AbsoluteNote? = tonic
-        for i in 0..<12 {
-            if semitoneIndices.contains(i) {
-                notes.append(note)
+        for _ in 0..<octaveCount {
+            for i in 0..<12 {
+                if semitoneIndices.contains(i) {
+                    notes.append(note)
+                }
+                note = note?.next
             }
-            note = note?.next
         }
         return notes
     }
 
     /// The (7) notes of this scale, but with nils inserted for the non-scale notes (12 values total).
+    /// May include nils at the end if the sequence runs past the eight octave.
     func sparseAbsoluteNotes(fromTonic tonic: AbsoluteNote) -> [AbsoluteNote?] {
         var notes: [AbsoluteNote?] = []
         var note: AbsoluteNote? = tonic
@@ -322,5 +339,40 @@ enum NonDiatonicKeyStyle: String, CaseIterable {
         case .disabled:
             return "Shaded and Disabled"
         }
+    }
+}
+
+
+enum Chord {
+    case I
+    case II
+    case III
+    case IV
+    case V
+    case VI
+    case VII
+
+    var diatonicIndices: [Int] {
+        func noteNumbers() -> [Int] {
+            switch self {
+            case .I:   return [1,3,5]
+            case .II:  return [2,4,6]
+            case .III: return [3,5,7]
+            case .IV:  return [4,6,8]
+            case .V:   return [5,7,9]
+            case .VI:  return [6,8,10]
+            case .VII: return [7,9,11]
+            }
+        }
+
+        let indices = noteNumbers().map { $0 - 1 }
+        return indices
+    }
+
+    /// Return the notes of this chord, for the scale starting at tonic.
+    /// Does not return notes past the eight octave.
+    func absoluteNotes(tonic: AbsoluteNote, scale: Scale) -> [AbsoluteNote] {
+        let scaleNotes: [AbsoluteNote] = scale.absoluteNotes(fromTonic: tonic, octaveCount: 2).compactMap { $0 }
+        return scaleNotes.getAt(indices: diatonicIndices)
     }
 }

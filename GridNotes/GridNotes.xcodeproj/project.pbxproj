@@ -38,6 +38,8 @@
 		2B6D2BB425B51BF2003AE01F /* KeyboardContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BB325B51BF2003AE01F /* KeyboardContainerController.swift */; };
 		2B6D2BC725B67161003AE01F /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BC625B67161003AE01F /* ColorTheme.swift */; };
 		2B6D2BD525B79CBC003AE01F /* RingKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BD425B79CBC003AE01F /* RingKeyboardView.swift */; };
+		2B6D2BE825B7D51E003AE01F /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BE725B7D51E003AE01F /* Array+.swift */; };
+		2B6D2BED25B7DA0E003AE01F /* GridChordsKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BEC25B7DA0E003AE01F /* GridChordsKeyboardViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,8 @@
 		2B6D2BB325B51BF2003AE01F /* KeyboardContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardContainerController.swift; sourceTree = "<group>"; };
 		2B6D2BC625B67161003AE01F /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
 		2B6D2BD425B79CBC003AE01F /* RingKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingKeyboardView.swift; sourceTree = "<group>"; };
+		2B6D2BE725B7D51E003AE01F /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
+		2B6D2BEC25B7DA0E003AE01F /* GridChordsKeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridChordsKeyboardViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,15 +152,14 @@
 				2B45544825ACC62E00A95718 /* AppState.swift */,
 				2B4553D125AB706500A95718 /* AppDelegate.swift */,
 				2B6D2BB325B51BF2003AE01F /* KeyboardContainerController.swift */,
-				2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */,
-				2B45544325ABDEA800A95718 /* KeyRowView.swift */,
-				2B6D2B9C25B510FC003AE01F /* RingKeyboardViewController.swift */,
-				2B6D2BD425B79CBC003AE01F /* RingKeyboardView.swift */,
+				2B6D2BDF25B7CBBC003AE01F /* Grid UI */,
+				2B6D2BE325B7CBC6003AE01F /* Ring UI */,
 				2B45543E25AB8D6C00A95718 /* SettingsViewController.swift */,
 				2B45541225AB722300A95718 /* Midi.swift */,
 				2B6D2BC625B67161003AE01F /* ColorTheme.swift */,
 				2B6D2BA125B51140003AE01F /* CGRect+.swift */,
 				2B6D2BAB25B511B6003AE01F /* Bundle+.swift */,
+				2B6D2BE725B7D51E003AE01F /* Array+.swift */,
 				2B4553DA25AB706700A95718 /* Assets.xcassets */,
 				2B4553DC25AB706700A95718 /* LaunchScreen.storyboard */,
 				2B4553DF25AB706700A95718 /* Info.plist */,
@@ -203,6 +206,25 @@
 				2B45542725AB735000A95718 /* Yamaha Grand Piano.sf2 */,
 			);
 			path = Instruments;
+			sourceTree = "<group>";
+		};
+		2B6D2BDF25B7CBBC003AE01F /* Grid UI */ = {
+			isa = PBXGroup;
+			children = (
+				2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */,
+				2B45544325ABDEA800A95718 /* KeyRowView.swift */,
+				2B6D2BEC25B7DA0E003AE01F /* GridChordsKeyboardViewController.swift */,
+			);
+			path = "Grid UI";
+			sourceTree = "<group>";
+		};
+		2B6D2BE325B7CBC6003AE01F /* Ring UI */ = {
+			isa = PBXGroup;
+			children = (
+				2B6D2B9C25B510FC003AE01F /* RingKeyboardViewController.swift */,
+				2B6D2BD425B79CBC003AE01F /* RingKeyboardView.swift */,
+			);
+			path = "Ring UI";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +371,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B6D2BE825B7D51E003AE01F /* Array+.swift in Sources */,
 				2B6D2B9D25B510FC003AE01F /* RingKeyboardViewController.swift in Sources */,
 				2B45540E25AB71CD00A95718 /* GridKeyboardViewController.swift in Sources */,
 				2B45541325AB722300A95718 /* Midi.swift in Sources */,
@@ -358,6 +381,7 @@
 				2B45544425ABDEA800A95718 /* KeyRowView.swift in Sources */,
 				2B6D2BB425B51BF2003AE01F /* KeyboardContainerController.swift in Sources */,
 				2B45543F25AB8D6C00A95718 /* SettingsViewController.swift in Sources */,
+				2B6D2BED25B7DA0E003AE01F /* GridChordsKeyboardViewController.swift in Sources */,
 				2B45544925ACC62E00A95718 /* AppState.swift in Sources */,
 				2B6D2BC725B67161003AE01F /* ColorTheme.swift in Sources */,
 				2B6D2BAC25B511B6003AE01F /* Bundle+.swift in Sources */,

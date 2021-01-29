@@ -23,10 +23,12 @@ class KeyboardContainerController: UIViewController {
 
     init(initialState: AppState) {
         switch initialState.interface {
-        case .grid:
+        case .gridNotes:
             _childController = GridKeyboardViewController(state: initialState)
-        case .ring:
+        case .ringNotes:
             _childController = RingKeyboardViewController(state: initialState)
+        case .gridChords:
+            _childController = GridChordsKeyboardViewController(state: initialState)
         }
         super.init(nibName: nil, bundle: nil)
         _childController.interfaceDelegate = self
@@ -77,14 +79,19 @@ extension KeyboardContainerController: InterfaceChanging {
         }
         
         switch interface {
-        case .grid:
+        case .gridNotes:
             if type(of: _childController) != GridKeyboardViewController.self {
                 let child = GridKeyboardViewController(state: state)
                 swapToNewChildVC(child: child)
             }
-        case .ring:
+        case .ringNotes:
             if type(of: _childController) != RingKeyboardViewController.self {
                 let child = RingKeyboardViewController(state: state)
+                swapToNewChildVC(child: child)
+            }
+        case .gridChords:
+            if type(of: _childController) != GridChordsKeyboardViewController.self {
+                let child = GridChordsKeyboardViewController(state: state)
                 swapToNewChildVC(child: child)
             }
         }

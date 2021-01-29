@@ -39,6 +39,16 @@ class KeyRowView: UIView {
     
     var keyDelegate: KeyDelegate? = nil
 
+    /// All of the notes being depressed by the user.
+    var depressedNotes: Set<AbsoluteNote> {
+        return Set<AbsoluteNote>(
+            _keys
+                .filter { $0.state == .selected }
+                .map { model.styledNotes[$0.tag]?.0 }
+                .compactMap { $0 }
+        )
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
