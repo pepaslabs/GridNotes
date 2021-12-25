@@ -12,6 +12,10 @@ Now available (for free) in the iOS AppStore for iPhone and iPad!  https://apps.
 
 ## Changelog
 
+### 1.2.1
+
+- Support iOS 15.
+
 ### 1.2
 
 - Support dark-mode.
