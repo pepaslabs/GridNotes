@@ -12,7 +12,7 @@ Now available (for free) in the iOS AppStore for iPhone and iPad!  https://apps.
 
 ## Changelog
 
-### 1.2.1
+### 1.2.2
 
 - Support iOS 15.
 
