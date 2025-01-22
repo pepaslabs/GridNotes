@@ -8,6 +8,8 @@
 import UIKit
 
 
+// MARK: - RingKeyboardViewController
+
 /// The ring-layout piano view controller.
 class RingKeyboardViewController: UIViewController, InterfaceDelegating {
 
@@ -125,19 +127,17 @@ class RingKeyboardViewController: UIViewController, InterfaceDelegating {
 
         let model: RingKeyboardView.Model = RingKeyboardView.Model(
             styledNotes: styledNotes,
-            stickyKeys: state.stickyKeys,
+            stickyKeys: state.keysAreSticky,
             stuckKeys: state.stuckKeys
         )
         _ringView.set(model: model)
     }
 
     private func _reconfigureClearButton() {
-        let shouldShowClearButton = state.stickyKeys && state.stuckKeys.count > 0
+        let shouldShowClearButton = state.keysAreSticky && state.stuckKeys.count > 0
         _clearButton.isHidden = !shouldShowClearButton
     }
 
-    // MARK: - Target/Action
-    
     @objc func didPressSettings() {
         didPressClear()
 
@@ -178,7 +178,7 @@ extension RingKeyboardViewController: KeyDelegate {
     
     func keyDidGetPressed(absoluteNote: AbsoluteNote) {
         startPlaying(absoluteNote: absoluteNote)
-        if state.stickyKeys {
+        if state.keysAreSticky {
             state.stuckKeys.insert(absoluteNote)
         }
         _reconfigureClearButton()
@@ -186,13 +186,15 @@ extension RingKeyboardViewController: KeyDelegate {
     
     func keyDidGetReleased(absoluteNote: AbsoluteNote) {
         stopPlaying(absoluteNote: absoluteNote)
-        if state.stickyKeys {
+        if state.keysAreSticky {
             state.stuckKeys.remove(absoluteNote)
         }
         _reconfigureClearButton()
     }
 }
 
+
+// MARK: - RingKeyboardView
 
 class RingKeyboardView: UIView {
     

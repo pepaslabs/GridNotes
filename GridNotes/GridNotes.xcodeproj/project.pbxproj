@@ -3,15 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2B4553D225AB706500A95718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4553D125AB706500A95718 /* AppDelegate.swift */; };
 		2B4553DB25AB706700A95718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B4553DA25AB706700A95718 /* Assets.xcassets */; };
 		2B4553DE25AB706700A95718 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B4553DC25AB706700A95718 /* LaunchScreen.storyboard */; };
-		2B4553E925AB706700A95718 /* GridNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4553E825AB706700A95718 /* GridNotesTests.swift */; };
-		2B4553F425AB706700A95718 /* GridNotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4553F325AB706700A95718 /* GridNotesUITests.swift */; };
 		2B45540E25AB71CD00A95718 /* GridKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */; };
 		2B45541325AB722300A95718 /* Midi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45541225AB722300A95718 /* Midi.swift */; };
 		2B45542825AB735000A95718 /* Rock Organ.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 2B45541825AB735000A95718 /* Rock Organ.sf2 */; };
@@ -39,35 +37,12 @@
 		2B6D2BC725B67161003AE01F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D2BC625B67161003AE01F /* Theme.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		2B4553E525AB706700A95718 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2B4553C625AB706500A95718 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2B4553CD25AB706500A95718;
-			remoteInfo = GridNotes;
-		};
-		2B4553F025AB706700A95718 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2B4553C625AB706500A95718 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2B4553CD25AB706500A95718;
-			remoteInfo = GridNotes;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		2B4553CE25AB706500A95718 /* GridNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B4553D125AB706500A95718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B4553DA25AB706700A95718 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B4553DD25AB706700A95718 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B4553DF25AB706700A95718 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B4553E425AB706700A95718 /* GridNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GridNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B4553E825AB706700A95718 /* GridNotesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridNotesTests.swift; sourceTree = "<group>"; };
-		2B4553EA25AB706700A95718 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B4553EF25AB706700A95718 /* GridNotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GridNotesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B4553F325AB706700A95718 /* GridNotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridNotesUITests.swift; sourceTree = "<group>"; };
-		2B4553F525AB706700A95718 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridKeyboardViewController.swift; sourceTree = "<group>"; };
 		2B45541225AB722300A95718 /* Midi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Midi.swift; sourceTree = "<group>"; };
 		2B45541825AB735000A95718 /* Rock Organ.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rock Organ.sf2"; sourceTree = "<group>"; };
@@ -103,20 +78,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2B4553E125AB706700A95718 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2B4553EC25AB706700A95718 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -124,8 +85,6 @@
 			isa = PBXGroup;
 			children = (
 				2B4553D025AB706500A95718 /* GridNotes */,
-				2B4553E725AB706700A95718 /* GridNotesTests */,
-				2B4553F225AB706700A95718 /* GridNotesUITests */,
 				2B4553CF25AB706500A95718 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -134,8 +93,6 @@
 			isa = PBXGroup;
 			children = (
 				2B4553CE25AB706500A95718 /* GridNotes.app */,
-				2B4553E425AB706700A95718 /* GridNotesTests.xctest */,
-				2B4553EF25AB706700A95718 /* GridNotesUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -143,15 +100,15 @@
 		2B4553D025AB706500A95718 /* GridNotes */ = {
 			isa = PBXGroup;
 			children = (
-				2B45541225AB722300A95718 /* Midi.swift */,
-				2B6D2BC625B67161003AE01F /* Theme.swift */,
+				2B4553D125AB706500A95718 /* AppDelegate.swift */,
 				2B45544825ACC62E00A95718 /* AppState.swift */,
+				2B45541225AB722300A95718 /* Midi.swift */,
+				2B6D2BB325B51BF2003AE01F /* KeyboardContainerController.swift */,
 				2B45540D25AB71CD00A95718 /* GridKeyboardViewController.swift */,
 				2B45544325ABDEA800A95718 /* KeyRowView.swift */,
 				2B6D2B9C25B510FC003AE01F /* RingKeyboardViewController.swift */,
 				2B45543E25AB8D6C00A95718 /* SettingsViewController.swift */,
-				2B4553D125AB706500A95718 /* AppDelegate.swift */,
-				2B6D2BB325B51BF2003AE01F /* KeyboardContainerController.swift */,
+				2B6D2BC625B67161003AE01F /* Theme.swift */,
 				2B6D2BA125B51140003AE01F /* CGRect+.swift */,
 				2B6D2BAB25B511B6003AE01F /* Bundle+.swift */,
 				2B4553DA25AB706700A95718 /* Assets.xcassets */,
@@ -160,24 +117,6 @@
 				2B45541725AB735000A95718 /* Instruments */,
 			);
 			path = GridNotes;
-			sourceTree = "<group>";
-		};
-		2B4553E725AB706700A95718 /* GridNotesTests */ = {
-			isa = PBXGroup;
-			children = (
-				2B4553E825AB706700A95718 /* GridNotesTests.swift */,
-				2B4553EA25AB706700A95718 /* Info.plist */,
-			);
-			path = GridNotesTests;
-			sourceTree = "<group>";
-		};
-		2B4553F225AB706700A95718 /* GridNotesUITests */ = {
-			isa = PBXGroup;
-			children = (
-				2B4553F325AB706700A95718 /* GridNotesUITests.swift */,
-				2B4553F525AB706700A95718 /* Info.plist */,
-			);
-			path = GridNotesUITests;
 			sourceTree = "<group>";
 		};
 		2B45541725AB735000A95718 /* Instruments */ = {
@@ -222,61 +161,18 @@
 			productReference = 2B4553CE25AB706500A95718 /* GridNotes.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2B4553E325AB706700A95718 /* GridNotesTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2B4553FB25AB706700A95718 /* Build configuration list for PBXNativeTarget "GridNotesTests" */;
-			buildPhases = (
-				2B4553E025AB706700A95718 /* Sources */,
-				2B4553E125AB706700A95718 /* Frameworks */,
-				2B4553E225AB706700A95718 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2B4553E625AB706700A95718 /* PBXTargetDependency */,
-			);
-			name = GridNotesTests;
-			productName = GridNotesTests;
-			productReference = 2B4553E425AB706700A95718 /* GridNotesTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		2B4553EE25AB706700A95718 /* GridNotesUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2B4553FE25AB706700A95718 /* Build configuration list for PBXNativeTarget "GridNotesUITests" */;
-			buildPhases = (
-				2B4553EB25AB706700A95718 /* Sources */,
-				2B4553EC25AB706700A95718 /* Frameworks */,
-				2B4553ED25AB706700A95718 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2B4553F125AB706700A95718 /* PBXTargetDependency */,
-			);
-			name = GridNotesUITests;
-			productName = GridNotesUITests;
-			productReference = 2B4553EF25AB706700A95718 /* GridNotesUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		2B4553C625AB706500A95718 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1220;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					2B4553CD25AB706500A95718 = {
 						CreatedOnToolsVersion = 12.2;
-					};
-					2B4553E325AB706700A95718 = {
-						CreatedOnToolsVersion = 12.2;
-						TestTargetID = 2B4553CD25AB706500A95718;
-					};
-					2B4553EE25AB706700A95718 = {
-						CreatedOnToolsVersion = 12.2;
-						TestTargetID = 2B4553CD25AB706500A95718;
 					};
 				};
 			};
@@ -294,8 +190,6 @@
 			projectRoot = "";
 			targets = (
 				2B4553CD25AB706500A95718 /* GridNotes */,
-				2B4553E325AB706700A95718 /* GridNotesTests */,
-				2B4553EE25AB706700A95718 /* GridNotesUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -325,20 +219,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2B4553E225AB706700A95718 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2B4553ED25AB706700A95718 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -360,36 +240,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2B4553E025AB706700A95718 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2B4553E925AB706700A95718 /* GridNotesTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2B4553EB25AB706700A95718 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2B4553F425AB706700A95718 /* GridNotesUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		2B4553E625AB706700A95718 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2B4553CD25AB706500A95718 /* GridNotes */;
-			targetProxy = 2B4553E525AB706700A95718 /* PBXContainerItemProxy */;
-		};
-		2B4553F125AB706700A95718 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2B4553CD25AB706500A95718 /* GridNotes */;
-			targetProxy = 2B4553F025AB706700A95718 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2B4553DC25AB706700A95718 /* LaunchScreen.storyboard */ = {
@@ -440,6 +291,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -454,7 +306,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -501,6 +353,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -509,7 +362,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -528,7 +381,7 @@
 				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = CPE62329FB;
 				INFOPLIST_FILE = GridNotes/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -550,7 +403,7 @@
 				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = CPE62329FB;
 				INFOPLIST_FILE = GridNotes/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -560,90 +413,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		2B4553FC25AB706700A95718 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CPE62329FB;
-				INFOPLIST_FILE = GridNotesTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pepaslabs.GridNotesTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GridNotes.app/GridNotes";
-			};
-			name = Debug;
-		};
-		2B4553FD25AB706700A95718 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CPE62329FB;
-				INFOPLIST_FILE = GridNotesTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pepaslabs.GridNotesTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GridNotes.app/GridNotes";
-			};
-			name = Release;
-		};
-		2B4553FF25AB706700A95718 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CPE62329FB;
-				INFOPLIST_FILE = GridNotesUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pepaslabs.GridNotesUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = GridNotes;
-			};
-			name = Debug;
-		};
-		2B45540025AB706700A95718 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CPE62329FB;
-				INFOPLIST_FILE = GridNotesUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pepaslabs.GridNotesUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = GridNotes;
 			};
 			name = Release;
 		};
@@ -664,24 +433,6 @@
 			buildConfigurations = (
 				2B4553F925AB706700A95718 /* Debug */,
 				2B4553FA25AB706700A95718 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2B4553FB25AB706700A95718 /* Build configuration list for PBXNativeTarget "GridNotesTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2B4553FC25AB706700A95718 /* Debug */,
-				2B4553FD25AB706700A95718 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2B4553FE25AB706700A95718 /* Build configuration list for PBXNativeTarget "GridNotesUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2B4553FF25AB706700A95718 /* Debug */,
-				2B45540025AB706700A95718 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -8,6 +8,8 @@
 import UIKit
 
 
+// MARK: - GridKeyboardViewController
+
 /// The grid-layout piano view controller.
 class GridKeyboardViewController: UIViewController, InterfaceDelegating {
     
@@ -193,7 +195,7 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
 
             }
 
-            let rowModel = KeyRowView.Model(styledNotes: styledNotes, stickyKeys: state.stickyKeys)
+            let rowModel = KeyRowView.Model(styledNotes: styledNotes, keysAreSticky: state.keysAreSticky)
             _rows[index].set(model: rowModel)
         }
         
@@ -217,8 +219,6 @@ class GridKeyboardViewController: UIViewController, InterfaceDelegating {
         return true
     }
 
-    // MARK: - Target/Action
-    
     /// Action to present the settings screen.
     @objc func didPressSettings() {
         didPressClear()
@@ -261,7 +261,7 @@ extension GridKeyboardViewController: KeyDelegate {
     
     func keyDidGetPressed(absoluteNote: AbsoluteNote) {
         startPlaying(absoluteNote: absoluteNote)
-        if state.stickyKeys {
+        if state.keysAreSticky {
             state.stuckKeys.insert(absoluteNote)
         }
         _reconfigureToolbar()
@@ -269,7 +269,7 @@ extension GridKeyboardViewController: KeyDelegate {
     
     func keyDidGetReleased(absoluteNote: AbsoluteNote) {
         stopPlaying(absoluteNote: absoluteNote)
-        if state.stickyKeys {
+        if state.keysAreSticky {
             state.stuckKeys.remove(absoluteNote)
         }
         _reconfigureToolbar()

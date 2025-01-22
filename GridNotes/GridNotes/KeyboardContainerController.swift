@@ -9,7 +9,7 @@ import UIKit
 
 
 protocol InterfaceChanging {
-    func interfaceDidGetSelected(interface: Interface, state: AppState)
+    func interfaceDidGetSelected(interface: UserInterface, state: AppState)
 }
 
 protocol InterfaceDelegating {
@@ -17,21 +17,23 @@ protocol InterfaceDelegating {
 }
 
 
+// MARK: - KeyboardContainerController
+
 class KeyboardContainerController: UIViewController, InterfaceChanging {
 
     var childController: (UIViewController & InterfaceDelegating)
     
-    func interfaceDidGetSelected(interface: Interface, state: AppState) {
+    func interfaceDidGetSelected(interface: UserInterface, state: AppState) {
         switch interface {
         case .grid:
             if type(of: childController) != GridKeyboardViewController.self {
                 let child = GridKeyboardViewController(state: state)
-                _swapToNewChildVC(child: child)
+                _swapTo(newChildVC: child)
             }
         case .ring:
             if type(of: childController) != RingKeyboardViewController.self {
                 let child = RingKeyboardViewController(state: state)
-                _swapToNewChildVC(child: child)
+                _swapTo(newChildVC: child)
             }
         }
     }
@@ -60,19 +62,22 @@ class KeyboardContainerController: UIViewController, InterfaceChanging {
         childController.didMove(toParent: self)
     }
 
-    private func _swapToNewChildVC(child newChild: UIViewController & InterfaceDelegating) {
+    private func _swapTo(newChildVC: UIViewController & InterfaceDelegating) {
         childController.willMove(toParent: nil)
         childController.removeFromParent()
         childController.view.removeFromSuperview()
 
-        view.addSubview(newChild.view)
-        view.topAnchor.constraint(equalTo: newChild.view.topAnchor).isActive = true
-        view.leadingAnchor.constraint(equalTo: newChild.view.leadingAnchor).isActive = true
-        view.trailingAnchor.constraint(equalTo: newChild.view.trailingAnchor).isActive = true
-        view.bottomAnchor.constraint(equalTo: newChild.view.bottomAnchor).isActive = true
-        addChild(newChild)
-        newChild.didMove(toParent: self)
-        childController = newChild
+        view.addSubview(newChildVC.view)
+        newChildVC.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: newChildVC.view.topAnchor),
+            view.leadingAnchor.constraint(equalTo: newChildVC.view.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: newChildVC.view.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: newChildVC.view.bottomAnchor),
+        ])
+        addChild(newChildVC)
+        newChildVC.didMove(toParent: self)
+        childController = newChildVC
         childController.interfaceDelegate = self
     }
     

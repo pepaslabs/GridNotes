@@ -9,13 +9,13 @@ import UIKit
 
 
 struct AppState {
-    var interface: Interface = .grid
+    var interface: UserInterface = .grid
     var tonicNote: Note = .C
     var scale: Scale = .major
     var octaves: [Octave]
     var keysPerOctave: KeysPerOctave
     var nonScaleStyle: NonDiatonicKeyStyle = .disabled
-    var stickyKeys: Bool = false
+    var keysAreSticky: Bool = false
     var stuckKeys: Set<AbsoluteNote> = []
     
     static var defaultState: AppState {
@@ -37,7 +37,7 @@ struct AppState {
 }
 
 
-enum Interface: String, CaseIterable {
+enum UserInterface: String, CaseIterable {
     case grid
     case ring
     

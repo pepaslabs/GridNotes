@@ -59,7 +59,8 @@ enum Instrument: String, CaseIterable {
 }
 
 
-// Globals (don't @ me).
+// MARK: - Globals.
+
 var g_instrument: Instrument = .rhodesEP
 var g_graph: AUGraph?
 var g_synthNode: AUNode = AUNode()

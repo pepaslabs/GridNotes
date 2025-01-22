@@ -8,6 +8,8 @@
 import UIKit
 
 
+// MARK: - SettingsViewController
+
 class SettingsViewController: UITableViewController {
 
     private(set) var state: AppState = AppState.defaultState
@@ -80,7 +82,7 @@ class SettingsViewController: UITableViewController {
         case _instrumentSection:
             return Instrument.allCases.count
         case _interfaceSection:
-            return Interface.allCases.count
+            return UserInterface.allCases.count
         default:
             fatalError()
         }
@@ -110,13 +112,13 @@ class SettingsViewController: UITableViewController {
         case _octaveKeysSection:
             state.keysPerOctave = KeysPerOctave.allCases[indexPath.row]
         case _stickySection:
-            state.stickyKeys = (indexPath.row == 0)
+            state.keysAreSticky = (indexPath.row == 0)
         case _instrumentSection:
             deinitAudio()
             g_instrument = Instrument.allCases[indexPath.row]
             initAudio()
         case _interfaceSection:
-            state.interface = Interface.allCases[indexPath.row]
+            state.interface = UserInterface.allCases[indexPath.row]
         default:
             fatalError()
         }
@@ -153,7 +155,7 @@ class SettingsViewController: UITableViewController {
             cell.textLabel?.text = keyCount.name
             
         case _stickySection:
-            isSelected = (state.stickyKeys && indexPath.row == 0) || (!state.stickyKeys && indexPath.row == 1)
+            isSelected = (state.keysAreSticky && indexPath.row == 0) || (!state.keysAreSticky && indexPath.row == 1)
             cell.textLabel?.text = (indexPath.row == 0) ? "Enabled" : "Disabled"
             
         case _instrumentSection:
@@ -161,7 +163,7 @@ class SettingsViewController: UITableViewController {
             cell.textLabel?.text = Instrument.allCases[indexPath.row].displayName
         
         case _interfaceSection:
-            let interface = Interface.allCases[indexPath.row]
+            let interface = UserInterface.allCases[indexPath.row]
             isSelected = state.interface == interface
             cell.textLabel?.text = interface.name
             
@@ -190,8 +192,6 @@ class SettingsViewController: UITableViewController {
             }
         }
     }
-    
-    // MARK: -
     
     override var prefersStatusBarHidden: Bool {
         return true

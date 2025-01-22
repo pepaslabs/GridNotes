@@ -21,11 +21,13 @@ enum KeyStyle: String {
 }
 
 
+// MARK: - KeyRowView
+
 class KeyRowView: UIView {
     
     struct Model {
         var styledNotes: [(AbsoluteNote, KeyStyle)?] = []
-        var stickyKeys: Bool = false
+        var keysAreSticky: Bool = false
         var stuckKeys: Set<Int> = []
     }
 
@@ -126,7 +128,7 @@ class KeyRowView: UIView {
                     key.backgroundColor = ColorTheme.shadedKey
                 }
                 
-                if model.stickyKeys {
+                if model.keysAreSticky {
                     key.addTarget(self, action: #selector(keyDidGetToggled(key:)), for: .touchDown)
                 } else {
                     key.addTarget(self, action: #selector(keyDidGetPressed(key:)), for: .touchDown)
@@ -147,8 +149,6 @@ class KeyRowView: UIView {
         setNeedsUpdateConstraints()
     }
 
-    // MARK: - Target/Action
-    
     @objc func keyDidGetPressed(key: UIButton) {
         guard let (absoluteNote, _) = model.styledNotes[key.tag] else { return }
         key.backgroundColor = ColorTheme.activeKey
